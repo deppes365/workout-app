@@ -53,6 +53,10 @@
             border-radius: 30px;
             color: #fff;
             font-weight: 500;
+
+            &:active {
+                background-color: #5AC1D1;
+            }
         }
     }
 }

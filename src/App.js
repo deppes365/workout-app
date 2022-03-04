@@ -13,12 +13,10 @@ import Home from "./pages/home/Home";
 //Components
 import Header from "./components/header/Header";
 import Menu from "./components/menu/Menu";
+import BottomNav from './components/bottomNav/BottomNav';
 
 
 function App() {
-    
-
-    
 
   return (
     <AppProvider>
@@ -32,6 +30,7 @@ function App() {
             <Route path='/register' element={<SignUp/>}/>
             <Route path='/register-2' element={<SignUp2/>}/>
           </Routes>
+          <BottomNav/>
         </div>
     </Router>
     </AppProvider>

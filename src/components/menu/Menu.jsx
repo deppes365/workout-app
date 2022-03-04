@@ -1,3 +1,4 @@
+import { isEditable } from '@testing-library/user-event/dist/utils';
 import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AppContext from '../../context/AppContext';
@@ -9,7 +10,7 @@ function Menu() {
 
     const navigate = useNavigate()
 
-    const onClick = (e) => {
+    const onLogout = (e) => {
         e.preventDefault()
         signOutUser()
         setLoggedIn(false)
@@ -17,9 +18,11 @@ function Menu() {
         navigate('/')
     }
 
+    
+
 	return (
 		<>
-			<ul className={`menu ${menuActive ? 'active' : ''}`}>
+			<ul className={`menu ${menuActive ? 'active' : ''}`} onClick={() => setMenuActive(false)}>
 				{loggedIn ? (
                     <>
 					<li>
@@ -38,7 +41,7 @@ function Menu() {
 						</Link>
 					</li>
                     <li>
-                        <button className='logoutBtn' onClick={onClick}>Log Out</button>
+                        <button className='logoutBtn' onClick={onLogout}>Log Out</button>
                     </li>
                     </>
 				) : 

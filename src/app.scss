@@ -139,4 +139,38 @@
 		display: flex;
 		justify-content: center;
 	}
+
+	#bottom-nav {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		height: 3.5rem;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: #fff;
+		border-top: 2px solid g.$dark-color;
+		&.inactive {
+			display: none;
+		}
+
+		a {
+			display: inline-flex;
+			border-radius: 50%;
+			overflow: hidden;
+			padding: 0.5rem;
+			.bottom-nav-icon {
+				color: g.$dark-color;
+				font-size: 2rem;
+				display: inline-block;
+				padding: 0.25rem;
+			}
+
+			&.active {
+				background-color: g.$accent-color;
+			}
+		}
+		
+	}
 }// App

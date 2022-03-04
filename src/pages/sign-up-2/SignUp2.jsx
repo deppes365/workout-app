@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { getAuth } from 'firebase/auth';
-import {doc, setDoc} from 'firebase/firestore'
+import {doc, updateDoc} from 'firebase/firestore'
 import {db} from '../../firebase.config'
 import app from '../../firebase.config';
 import './sign-up-2.scss';
-import { getAllByTestId } from '@testing-library/react';
+
+import { useNavigate } from 'react-router-dom';
 
 function SignUp2() {
 	const [formData, setFormData] = useState({
@@ -27,8 +28,19 @@ function SignUp2() {
 
     const auth = getAuth(app)
 
+    const navigate = useNavigate()
+
     const saveData = async () => {
-        await setDoc(doc(db, 'users', auth.currentUser.uid), formDataCopy)
+        try {
+            const docRef = doc(db, 'users', auth.currentUser.uid)
+            await updateDoc(docRef, {
+                ...formDataCopy
+            })
+            navigate('/')
+        } catch (error) {
+            console.log(error);
+        }
+        
     }
 
 	const formDataCopy = formData;
@@ -42,9 +54,11 @@ function SignUp2() {
 			formDataCopy.height = (+centimeters / 2.54).toFixed(1);
             formDataCopy.weight = (weight * 2.2).toFixed(1);
 		}
+        delete formDataCopy.centimeters
+        delete formDataCopy.feet
+        delete formDataCopy.inches
         
-
-		console.log(formDataCopy);
+        saveData()
 	};
 
 	return (

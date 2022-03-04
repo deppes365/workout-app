@@ -43,8 +43,7 @@ function SignIn() {
 			);
 
 			if (userCredential.user) {
-				setLoggedIn(true)
-        navigate('/')
+        		navigate('/')
 			}
 		} catch (error) {
 			console.log(error);
