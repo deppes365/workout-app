@@ -9,6 +9,7 @@ import SignIn from "./pages/signin/SignIn";
 import SignUp from "./pages/signup/SignUp";
 import SignUp2 from './pages/sign-up-2/SignUp2';
 import Home from "./pages/home/Home";
+import Workouts from './pages/workouts/Workouts';
 
 //Components
 import Header from "./components/header/Header";
@@ -29,6 +30,7 @@ function App() {
             <Route path="/sign-in" element={<SignIn/>}/>
             <Route path='/register' element={<SignUp/>}/>
             <Route path='/register-2' element={<SignUp2/>}/>
+            <Route path='/workouts' element={<Workouts/>}/>
           </Routes>
           <BottomNav/>
         </div>

@@ -8,7 +8,7 @@ import "./home.scss"
 function Home() {
     const [userData, setUserData] = useState({})
     const {name} = userData
-    const {loggedIn, setLoggedIn} = useContext(AppContext)
+    const {loggedIn, setLoggedIn, setActiveLink} = useContext(AppContext)
 
     const navigate = useNavigate()
 
@@ -38,15 +38,17 @@ function Home() {
             })
         }
 
+
         return () => {
             isMounted.current = false
         }
         
         
-    },[onAuthStateChanged, isMounted])
+    },[onAuthStateChanged, isMounted]);
 
-    
-    
+    useEffect(()=> {
+        setActiveLink(window.location.pathname)
+    }, [])
 
     
   return (

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './signin.scss';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import app from '../../firebase.config'
@@ -81,10 +81,8 @@ function SignIn() {
 				/>
 				<button>Sign In</button>
 			</form>
-			<div className="google-sign-in">
-				<h3>or</h3>
-				<p>Sign in with</p>
-			</div>
+			
+			<Link to='/register'>Don't have an account? Register here</Link>
 		</div>
 	);
 }

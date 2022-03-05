@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import "./signup.scss"
 import {getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import app from '../../firebase.config'
@@ -92,10 +92,8 @@ function SignUp() {
         {!passwordsMatch && (<p className='password-error'>Password does not match</p>)}
         <button>Sign Up</button>
       </form>
-      <div className="google-sign-in">
-        <h3>or</h3>
-        <p>Sign up with</p>
-      </div>
+      
+      <Link to='/sign-in'>Already have an account? Sign in here</Link>
     </div>
   )
 }

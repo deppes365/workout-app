@@ -7,6 +7,7 @@ const AppContext = createContext()
 export const AppProvider = ({children}) => {
     const [loggedIn, setLoggedIn] = useState(false)
     const [menuActive, setMenuActive] = useState(false)
+    const [activeLink, setActiveLink] = useState('/')
 
     const signOutUser = async () => {
         try {
@@ -23,6 +24,8 @@ export const AppProvider = ({children}) => {
         setLoggedIn,
         menuActive,
         setMenuActive,
+        activeLink, 
+        setActiveLink,
         signOutUser
     }
 
