@@ -1,5 +1,5 @@
-import { createContext, useState } from "react";
-import app from '../firebase.config'
+import { createContext, useState, useRef } from "react";
+import app from '../../firebase.config'
 import { getAuth, signOut } from "firebase/auth";
 
 const AppContext = createContext()
@@ -8,6 +8,7 @@ export const AppProvider = ({children}) => {
     const [loggedIn, setLoggedIn] = useState(false)
     const [menuActive, setMenuActive] = useState(false)
     const [activeLink, setActiveLink] = useState('/')
+    const fetchedUserWorkouts = useRef(false)
 
     const signOutUser = async () => {
         try {
@@ -26,7 +27,8 @@ export const AppProvider = ({children}) => {
         setMenuActive,
         activeLink, 
         setActiveLink,
-        signOutUser
+        signOutUser,
+        fetchedUserWorkouts
     }
 
     return (

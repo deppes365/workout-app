@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import "./signup.scss"
 import {getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import app from '../../firebase.config'
-import AppContext from '../../context/AppContext'
+import AppContext from '../../context/appContext/AppContext'
 import { db } from '../../firebase.config'
 import { setDoc, doc } from 'firebase/firestore'
 

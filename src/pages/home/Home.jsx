@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext, useRef} from 'react'
-import AppContext from '../../context/AppContext'
+import AppContext from '../../context/appContext/AppContext'
 import { useNavigate } from 'react-router-dom'
 import {getAuth, onAuthStateChanged} from 'firebase/auth'
 import app from '../../firebase.config'
@@ -19,7 +19,8 @@ function Home() {
     // Once user comes to site, checks if logged in.
     // If a user is not logged in, redirect to sign in
     useEffect(() => {
-        if(isMounted) {
+        
+        if(isMounted.current) {
             onAuthStateChanged(auth, (user) => {
                 if(user) {
                     const user = auth.currentUser

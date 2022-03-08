@@ -2,15 +2,14 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './signin.scss';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import app from '../../firebase.config'
-import AppContext from '../../context/AppContext';
+import AppContext from '../../context/appContext/AppContext';
 
 function SignIn() {
-  const { setLoggedIn, setMenuActive} = useContext(AppContext)
+	const { setLoggedIn, setMenuActive } = useContext(AppContext);
 
-  useEffect(() => {
-    setMenuActive(false)
-  }, [])
+	useEffect(() => {
+		setMenuActive(false);
+	}, []);
 
 	const [formData, setFormData] = useState({
 		email: '',
@@ -19,9 +18,6 @@ function SignIn() {
 
 	const { email, password } = formData;
 	const navigate = useNavigate();
-  
-
-  
 
 	const onChange = e => {
 		setFormData(prevState => ({
@@ -34,7 +30,7 @@ function SignIn() {
 		e.preventDefault();
 
 		try {
-			const auth = getAuth(app);
+			const auth = getAuth();
 
 			const userCredential = await signInWithEmailAndPassword(
 				auth,
@@ -43,7 +39,7 @@ function SignIn() {
 			);
 
 			if (userCredential.user) {
-        		navigate('/')
+				navigate('/');
 			}
 		} catch (error) {
 			console.log(error);
@@ -60,7 +56,6 @@ function SignIn() {
 			</h1>
 			<p>Please Sign In</p>
 			<form onSubmit={onSubmit}>
-      
 				<input
 					type="text"
 					name="email"
@@ -81,8 +76,8 @@ function SignIn() {
 				/>
 				<button>Sign In</button>
 			</form>
-			
-			<Link to='/register'>Don't have an account? Register here</Link>
+
+			<Link to="/register">Don't have an account? Register here</Link>
 		</div>
 	);
 }

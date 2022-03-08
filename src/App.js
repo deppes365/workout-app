@@ -1,6 +1,7 @@
 
-import {BrowserRouter as Router, Routes, Route, Link, useNavigate} from 'react-router-dom';
-import { AppProvider } from "./context/AppContext";
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { AppProvider } from "./context/appContext/AppContext";
+import { WorkoutProvider } from './context/workoutContext/WorkoutContext';
 import "./app.scss"
 
 
@@ -20,6 +21,7 @@ import BottomNav from './components/bottomNav/BottomNav';
 function App() {
 
   return (
+    <WorkoutProvider>
     <AppProvider>
     <Router>
       <div className="App">
@@ -36,6 +38,7 @@ function App() {
         </div>
     </Router>
     </AppProvider>
+    </WorkoutProvider>
   );
 }
 
