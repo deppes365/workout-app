@@ -1,8 +1,8 @@
 import React from 'react'
 
-function Set() {
+function Set({showSets}) {
   return (
-    <div className='setContainer '>
+    <div className={`setContainer ${showSets ? 'active' : ""}`}>
         <h3>Set 1</h3>
         <div className="set">
             <p>Reps: 10</p>

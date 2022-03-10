@@ -14,7 +14,7 @@ function BottomNav() {
         <div className="container">
             <Link to='/' ><FaWeight className='bottom-nav-icon'/></Link>
             <Link to='/workouts' id='workoutsLink' className={activeLink === '/workouts' ? 'active' : ''} ><FaDumbbell className='bottom-nav-icon'/></Link>
-            <Link to='/' id='homeLink' className={activeLink === '/' ? 'active' : ''} ><FaHome className='bottom-nav-icon '/></Link>
+            <Link to='/home' id='homeLink' className={activeLink === '/home' ? 'active' : ''} ><FaHome className='bottom-nav-icon '/></Link>
             <Link to='/'><FaUser className='bottom-nav-icon'/></Link>
         </div>
     </div>

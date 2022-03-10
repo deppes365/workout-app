@@ -12,7 +12,7 @@ export const fetchWorkouts = async () => {
 
 		if (docSnap.exists()) {
 			const userWorkouts = docSnap.data().workouts;
-            return userWorkouts
+            return userWorkouts;
 		}
 	} catch (error) {}
 };

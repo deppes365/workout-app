@@ -3,7 +3,6 @@ import AppContext from '../../context/appContext/AppContext';
 import app, { db } from '../../firebase.config';
 import { doc, getDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import { async } from '@firebase/util';
 import { fetchWorkouts } from '../../context/workoutContext/WorkoutActions';
 import WorkoutContext from '../../context/workoutContext/WorkoutContext';
 import UserWorkoutItem from '../../components/userWorkoutItem/UserWorkoutItem';
@@ -40,9 +39,9 @@ function Workouts() {
 		'Saturday',
 	];
 
+    
     const { userWorkouts, dispatch} = useContext(WorkoutContext)
-    // const {aerobic, anaerobic} = userWorkouts
-
+    
 	const auth = getAuth();
 	useEffect(() => {
 		setActiveLink(window.location.pathname);
@@ -52,23 +51,7 @@ function Workouts() {
 		setDate(d.getDate());
 		setYear(d.getFullYear());
 
-		// const getWorkouts = async () => {
-		//     try {
-		//         const userRef = doc(db, 'users', auth.currentUser.uid)
-		//         const docSnap = await getDoc(userRef)
-
-		//         setWorkouts({
-		//             ...docSnap.data().workouts
-		//         })
-		//         console.log(docSnap.data().workouts);
-
-		//     } catch (error) {
-		//         console.log(error);
-		//     }
-
-		// }
-
-		// getWorkouts()]
+		
         const getUserWorkouts = async () => {
             try {
                 const userWorkouts = await fetchWorkouts(); 
@@ -79,7 +62,7 @@ function Workouts() {
             }
             
         }
-       console.log(fetchedUserWorkouts.current);
+       
 
         // Ensures user workouts are fetched once the workouts page is loaded
         if(!fetchedUserWorkouts.current) {
@@ -90,6 +73,9 @@ function Workouts() {
         }
         
 	}, []);
+
+    
+   
 
 	return (
 		<div id="workouts" className="page">

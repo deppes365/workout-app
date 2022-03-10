@@ -19,8 +19,8 @@ function Home() {
     // Once user comes to site, checks if logged in.
     // If a user is not logged in, redirect to sign in
     useEffect(() => {
-        
-        if(isMounted.current) {
+       
+        if(isMounted) {
             onAuthStateChanged(auth, (user) => {
                 if(user) {
                     const user = auth.currentUser
@@ -34,11 +34,11 @@ function Home() {
                     }
                 } else{
                     setLoggedIn(false)
-                    navigate('/sign-in')
+                    navigate('/')
                 }   
             })
         }
-
+        
 
         return () => {
             isMounted.current = false
