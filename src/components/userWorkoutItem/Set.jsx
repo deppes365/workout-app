@@ -1,8 +1,8 @@
 import React from 'react'
 
-function Set({key, setNum, reps, weight, showSets}) {
+function Set({setNum, reps, weight, showSets}) {
   return (
-    <div key={key} className={`setContainer ${showSets ? 'active' : ""}`}>
+    <div  className={`setContainer ${showSets ? 'active' : ""}`}>
         <h3>Set {setNum}</h3>
         <div className="set">
             <p>Reps: {reps}</p>
