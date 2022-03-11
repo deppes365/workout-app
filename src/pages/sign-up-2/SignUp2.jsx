@@ -4,7 +4,6 @@ import {doc, updateDoc} from 'firebase/firestore'
 import {db} from '../../firebase.config'
 import app from '../../firebase.config';
 import './sign-up-2.scss';
-
 import { useNavigate } from 'react-router-dom';
 
 function SignUp2() {

@@ -48,7 +48,7 @@ function Menu() {
                 (
                     <>
                         <li>
-                            <Link className='nav-link' to='/sign-in'>Sign In</Link>
+                            <Link className='nav-link' to='/'>Sign In</Link>
                         </li>
                         <li>
                         <Link className='nav-link' to='/register'>Sign Up</Link>

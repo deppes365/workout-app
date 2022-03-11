@@ -1,12 +1,12 @@
 import React from 'react'
 
-function Set({showSets}) {
+function Set({key, setNum, reps, weight, showSets}) {
   return (
-    <div className={`setContainer ${showSets ? 'active' : ""}`}>
-        <h3>Set 1</h3>
+    <div key={key} className={`setContainer ${showSets ? 'active' : ""}`}>
+        <h3>Set {setNum}</h3>
         <div className="set">
-            <p>Reps: 10</p>
-            <p>Weight: 225 lbs</p>
+            <p>Reps: {reps}</p>
+            <p>Weight: {weight}</p>
         </div>
     </div>
   )

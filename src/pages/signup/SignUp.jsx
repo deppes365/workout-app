@@ -1,101 +1,175 @@
-import React, {useState, useContext, useEffect} from 'react'
-import { useNavigate, Link } from 'react-router-dom'
-import "./signup.scss"
-import {getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
-import app from '../../firebase.config'
-import AppContext from '../../context/appContext/AppContext'
-import { db } from '../../firebase.config'
-import { setDoc, doc } from 'firebase/firestore'
-
-
-
+import React, { useState, useContext, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import './signup.scss';
+import {
+	getAuth,
+	createUserWithEmailAndPassword,
+	updateProfile,
+} from 'firebase/auth';
+import app from '../../firebase.config';
+import AppContext from '../../context/appContext/AppContext';
+import { db } from '../../firebase.config';
+import { setDoc, doc } from 'firebase/firestore';
+import InitialSignUp from './InitialSignUp';
+import Demographic from './Demographic';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function SignUp() {
-    const [passwordsMatch, setPasswordsMatch] = useState(true);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    password2: ''
-  })
+	const navigate = useNavigate();
 
-  const {name, email, password, password2} = formData;
-  const navigate = useNavigate()
+	const [passwordsMatch, setPasswordsMatch] = useState(true);
 
-  const {setMenuActive} = useContext(AppContext)
+	const [formData, setFormData] = useState({
+		name: '',
+		email: '',
+		password: '',
+		password2: '',
+		unit: 'imperial',
+		sex: 'male',
+		feet: 0,
+		inches: 0,
+		centimeters: 0,
+		weight: 0,
+		height: 0,
+		workouts: [],
+		weighIns: [],
+	});
 
-  useEffect(() => setMenuActive(false), [])
+	const {
+		name,
+		email,
+		password,
+		password2,
+		unit,
+		sex,
+		feet,
+		inches,
+		centimeters,
+		weight,
+	} = formData;
 
+	const { setMenuActive } = useContext(AppContext);
 
-  const onChange = (e) => {
-    setFormData(prevState => (
-      {
-        ...prevState,
-        [e.target.id]: e.target.value
-      }
-    ))
-  }
+	useEffect(() => setMenuActive(false), []);
 
-  const onSubmit = async (e) => {
+	const onChange = e => {
+		setFormData(prevState => ({
+			...prevState,
+			[e.target.name]: e.target.value,
+		}));
+	};
+
+	const [currentForm, setCurrentForm] = useState(0);
+	const [userCreated, setUserCreated] = useState(false);
+
+	const handleNextPage = async e => {
+		e.preventDefault();
+
+		if (password !== password2) {
+			formData.password = '';
+			formData.password2 = '';
+			return setPasswordsMatch(false);
+		}
+
+		if (!userCreated) {
+			try {
+				const auth = getAuth();
+				const userCredential = await createUserWithEmailAndPassword(
+					auth,
+					email,
+					password
+				);
+
+				
+				await updateProfile(auth.currentUser, {
+					displayName: name,
+				});
+
+        setUserCreated(true)
+
+				setCurrentForm(currentForm + 1);
+			} catch (error) {
+				if (error.code === 'auth/email-already-in-use') {
+					toast.error('Looks like this email is already in use...');
+				}
+			}
+		}
+	};
+
+	const createUserProfile = async (e) => {
     e.preventDefault()
-    if(password !== password2) {
-        return setPasswordsMatch(false)
-    }
+		const formDataCopy = formData;
 
-    try {
-        const auth = getAuth(app)
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password)
-        const user = userCredential.user
-        await updateProfile(auth.currentUser, {
-            displayName: name
-        })
+		if (unit === 'imperial') {
+			formDataCopy.height = +feet * 12 + +inches;
+			formDataCopy.weight = weight;
+		} else {
+			formDataCopy.height = (+centimeters / 2.54).toFixed(1);
+			formDataCopy.weight = (weight * 2.2).toFixed(1);
+		}
 
-        const formDataCopy = formData;
-        formDataCopy.displayName = name
-        delete formDataCopy.name
-        delete formDataCopy.password
-        delete formDataCopy.password2
+		delete formDataCopy.inches;
+		delete formDataCopy.feet;
+		delete formDataCopy.centimeters;
+		delete formDataCopy.password;
+		delete formDataCopy.password2;
 
-        try {
-          await setDoc(doc(db, 'users', user.uid), formDataCopy)
+		const auth = getAuth();
+		const user = auth.currentUser;
+		formDataCopy.userRef = user.uid;
 
-        } catch (error) {
-          console.log(error);
-        }
+		try {
+			await setDoc(doc(db, 'users', user.uid), formDataCopy);
 
-        
+			navigate('/home');
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
-        
-        navigate('/register-2')
-    } catch (error) {
-        console.log(error);
-    }
-  }
+	const handlePrevPage = () => {
+		setCurrentForm(currentForm - 1);
+	};
 
-  return (
-    <div id='sign-up'>
-      <h1>Eppes<span><em>Fit</em></span></h1>
-      <p>Let's create your account!</p>
-      <form onSubmit={onSubmit}>
-      <input
-					type="text"
-					name="name"
-					id="name"
-					placeholder="Name"
-					value={name}
-					required
-					onChange={onChange}
-				/>
-        <input type="text" name='email' id='email' placeholder='Email' required onChange={onChange} />
-        <input type="password" name='password' id='password' placeholder='Password' required onChange={onChange}/>
-        <input type="password" name='password2' id='password2' placeholder='Confirm Password' required onChange={onChange}/>
-        {!passwordsMatch && (<p className='password-error'>Password does not match</p>)}
-        <button>Sign Up</button>
-      </form>
-      
-      <Link to='/sign-in'>Already have an account? Sign in here</Link>
-    </div>
-  )
+	const forms = [
+		<InitialSignUp
+			onChange={onChange}
+			name={name}
+			email={email}
+			password={password}
+			password2={password2}
+			handleNextPage={handleNextPage}
+			passwordsMatch={passwordsMatch}
+		/>,
+		<Demographic
+			handlePrevPage={handlePrevPage}
+			onChange={onChange}
+			unit={unit}
+			sex={sex}
+			feet={feet}
+			inches={inches}
+			centimeters={centimeters}
+			weight={weight}
+			createUserProfile={createUserProfile}
+		/>,
+	];
+
+	return (
+		<div id="sign-up">
+			<h1>
+				Eppes
+				<span>
+					<em>Fit</em>
+				</span>
+			</h1>
+			<p>Let's create your account!</p>
+			{forms[currentForm]}
+			<p>
+				Already have an account? <Link to="/">Sign in</Link>
+			</p>
+		</div>
+	);
 }
 
-export default SignUp
+export default SignUp;
