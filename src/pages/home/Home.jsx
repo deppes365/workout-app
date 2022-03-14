@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import app from '../../firebase.config';
 import './home.scss';
+import { FaRunning, FaWeight } from 'react-icons/fa';
 
 function Home() {
 	const [userData, setUserData] = useState({});
@@ -52,6 +53,28 @@ function Home() {
 		<div id="home" className="page">
 			<div className="container">
 				<h1>Welcome back {name}</h1>
+				<div className="overview-container">
+					<div className="grid-item-container">
+						<div className="grid-item">
+							<p>Workouts This Week</p>
+							<FaRunning className="overview-icon" />
+						</div>
+						<div className="grid-item">
+							<p>Current Weight</p>
+							<FaWeight className="overview-icon" />
+						</div>
+					</div>
+					<div className="grid-item-container">
+						<div className="grid-item">
+							<p>Workouts This Week</p>
+							<FaRunning className="overview-icon" />
+						</div>
+						<div className="grid-item">
+							<p>Current Weight</p>
+							<FaWeight className="overview-icon" />
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	);

@@ -1,12 +1,20 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import WorkoutContext from '../../context/workoutContext/WorkoutContext';
 import Set from './Set';
 import AddWorkout from '../AddWorkout';
 import { FaChevronUp } from 'react-icons/fa';
 
-function UserWorkoutItem({ setsNum, sets, workout, equipment }) {
+function UserWorkoutItem({ sets, workout, equipment }) {
 	const [showSets, setShowSets] = useState(false);
 	const [cancelSet, setCancelSet] = useState(false);
+	const [editSets, setEditSets] = useState(false);
+	const [userSets, setUserSets] = useState(sets);
+
+	
+
+	const handleEdit = () => {
+		setEditSets(!editSets);
+	};
 
 	const onClick = () => {
 		if (cancelSet) {
@@ -15,6 +23,12 @@ function UserWorkoutItem({ setsNum, sets, workout, equipment }) {
 		} else {
 			setShowSets(!showSets);
 		}
+	};
+
+	const newSet = {
+		set: userSets.length + 1,
+		reps: 0,
+		weight: 0,
 	};
 
 	const addSet = e => {
@@ -26,7 +40,10 @@ function UserWorkoutItem({ setsNum, sets, workout, equipment }) {
 			setShowSets(!showSets);
 			setCancelSet(!cancelSet);
 		}
+
+		setUserSets([...userSets, newSet]);
 	};
+
 	return (
 		<>
 			<div className="userWorkoutItem">
@@ -39,12 +56,20 @@ function UserWorkoutItem({ setsNum, sets, workout, equipment }) {
 				<h1 className="workoutTitle">{workout}</h1>
 				<h3 className="equipmentTitle">{`(${equipment})`}</h3>
 				<div className="infoContainer">
-					<p>Sets: {setsNum}</p>
+					<p>Sets: {sets.length}</p>
 					<p>Max Weight: 225 lbs</p>
 				</div>
 				<div className="workoutDetails">
-					{sets.map(({ set, reps, weight }, i) => (
-						<Set key={i} setNum={set} reps={reps} weight={weight} showSets={showSets}/>
+					{userSets.map(({ set, reps, weight }, i) => (
+						<Set
+							key={i}
+							setNum={set}
+							reps={reps}
+							weight={weight}
+							showSets={showSets}
+							handleEdit={handleEdit}
+							editSets={editSets}
+						/>
 					))}
 				</div>
 				<div className="arrowContainer">

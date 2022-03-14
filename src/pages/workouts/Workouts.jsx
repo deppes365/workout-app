@@ -38,7 +38,6 @@ function Workouts() {
 				{userWorkouts.map(({ sets, type, workout, equipment }, i) => (
 					<UserWorkoutItem
 						key={i}
-						setsNum={sets.length}
 						sets={sets}
 						type={type}
 						workout={workout}

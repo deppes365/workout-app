@@ -3,6 +3,7 @@ import { AppProvider } from './context/appContext/AppContext';
 import { WorkoutProvider } from './context/workoutContext/WorkoutContext';
 import './app.scss';
 import { ToastContainer, toast } from 'react-toastify';
+import { useState } from 'react';
 
 // Pages
 import SignIn from './pages/signin/SignIn';
@@ -17,13 +18,19 @@ import Menu from './components/menu/Menu';
 import BottomNav from './components/bottomNav/BottomNav';
 
 function App() {
+  const [darkMode, setDarkMode] = useState(false)
+
+  const toggleTheme = () => {
+    setDarkMode(!darkMode)
+  }
+
 	return (
 		<WorkoutProvider>
 			<AppProvider>
 				<Router>
-					<div className="App">
+					<div className={`App ${darkMode ? 'dark-mode' : ''}`}>
 						<Header />
-						<Menu />
+						<Menu toggleTheme={toggleTheme} darkMode={darkMode}/>
 						<Routes>
 							<Route path="/home" element={<Home />} />
 							<Route path="/" element={<SignIn />} />

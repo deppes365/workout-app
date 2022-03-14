@@ -1,7 +1,6 @@
 import React from 'react';
 
 function Demographic({
-	handlePrevPage,
 	onChange,
 	unit,
 	sex,
@@ -132,14 +131,6 @@ function Demographic({
 				</div>
 			</div>
 			<div className="btnDiv">
-				<button
-					onClick={e => {
-						e.preventDefault();
-						handlePrevPage();
-					}}
-				>
-					Back
-				</button>
 				<button type="submit">Submit</button>
 			</div>
 		</form>

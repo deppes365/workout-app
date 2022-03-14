@@ -128,9 +128,7 @@ function SignUp() {
 		}
 	};
 
-	const handlePrevPage = () => {
-		setCurrentForm(currentForm - 1);
-	};
+	
 
 	const forms = [
 		<InitialSignUp
@@ -143,7 +141,7 @@ function SignUp() {
 			passwordsMatch={passwordsMatch}
 		/>,
 		<Demographic
-			handlePrevPage={handlePrevPage}
+			
 			onChange={onChange}
 			unit={unit}
 			sex={sex}
