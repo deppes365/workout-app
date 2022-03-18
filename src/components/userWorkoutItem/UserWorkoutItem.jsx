@@ -1,7 +1,6 @@
 import React, { useState, useContext, useRef } from 'react';
-import WorkoutContext from '../../context/workoutContext/WorkoutContext';
 import Set from './Set';
-import AddWorkout from '../AddWorkout';
+
 import { FaChevronUp } from 'react-icons/fa';
 
 function UserWorkoutItem({ sets, workout, equipment }) {

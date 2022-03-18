@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AppProvider } from './context/appContext/AppContext';
 import { WorkoutProvider } from './context/workoutContext/WorkoutContext';
 import './app.scss';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import { useState } from 'react';
 
 // Pages

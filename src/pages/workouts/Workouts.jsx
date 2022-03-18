@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppContext from '../../context/appContext/AppContext';
-import app, { db } from '../../firebase.config';
+import { db } from '../../firebase.config';
 import { doc, getDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { FaSearch, FaTimes } from 'react-icons/fa';

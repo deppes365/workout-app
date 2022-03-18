@@ -6,7 +6,7 @@ import {
 	createUserWithEmailAndPassword,
 	updateProfile,
 } from 'firebase/auth';
-import app from '../../firebase.config';
+
 import AppContext from '../../context/appContext/AppContext';
 import { db } from '../../firebase.config';
 import { setDoc, doc } from 'firebase/firestore';

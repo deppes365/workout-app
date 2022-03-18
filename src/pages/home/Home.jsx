@@ -10,7 +10,7 @@ function Home() {
 	const [userData, setUserData] = useState({});
 	const { name } = userData;
 
-	const { loggedIn, setLoggedIn, setActiveLink } = useContext(AppContext);
+	const { setLoggedIn, setActiveLink } = useContext(AppContext);
 
 	const navigate = useNavigate();
 
