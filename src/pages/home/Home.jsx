@@ -43,10 +43,12 @@ function Home() {
 		return () => {
 			isMounted.current = false;
 		};
-	}, [onAuthStateChanged, isMounted]);
+		// eslint-disable-next-line
+	}, [isMounted]);
 
 	useEffect(() => {
 		setActiveLink(window.location.pathname);
+		// eslint-disable-next-line
 	}, []);
 
 	return (

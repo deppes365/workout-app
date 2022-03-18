@@ -16,7 +16,7 @@ function SignUp2() {
         weight: 0
 	});
 
-	const { unit, sex, feet, inches, centimeters, weight } = formData;
+	const { unit, feet, inches, centimeters, weight } = formData;
 
 	const onChange = e => {
 		setFormData(prevState => ({

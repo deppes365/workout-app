@@ -6,7 +6,7 @@ import AppContext from '../../context/appContext/AppContext';
 import { toast } from 'react-toastify';
 
 function SignIn() {
-	const { setLoggedIn, setMenuActive } = useContext(AppContext);
+	const { setMenuActive } = useContext(AppContext);
 
 	useEffect(() => {
 		setMenuActive(false);
