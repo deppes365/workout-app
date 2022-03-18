@@ -1,7 +1,7 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext} from 'react'
 import AppContext from '../../context/appContext/AppContext'
 import {FaHome, FaUser, FaWeight, FaDumbbell} from 'react-icons/fa'
-import {Link, useParams} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 function BottomNav() {
     const {loggedIn} = useContext(AppContext)

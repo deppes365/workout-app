@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from 'react';
+import React, { useState } from 'react';
 import Set from './Set';
 
 import { FaChevronUp } from 'react-icons/fa';

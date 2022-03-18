@@ -12,7 +12,7 @@ import { workoutList } from '../../WorkoutList';
 import SearchResult from '../../components/SearchResult';
 
 function Workouts() {
-	const { setActiveLink, fetchedUserWorkouts } = useContext(AppContext);
+	const { setActiveLink } = useContext(AppContext);
 	const { userWorkouts, setUserWorkouts } = useContext(WorkoutContext);
 	const isMounted = useRef(true);
 
