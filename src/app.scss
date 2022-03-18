@@ -249,6 +249,76 @@
 			justify-content: flex-start;
 			align-items: center;
 		}
+
+		.workoutSearchBar {
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 2rem;
+			background-color: white;
+			border-radius: 30px;
+			border: 1px solid g.$dark-color;
+			position: relative;
+
+			input {
+				border: 0;
+				background-color: transparent;
+				font-size: 1.2rem;
+				text-align: center;
+				&:focus {
+					outline: 0;
+				}
+			}
+
+			.icon {
+				position: absolute;
+				top: 50%;
+				right: 1rem;
+				transform: translateY(-50%);
+				font-size: 1.2rem;
+				color: g.$dark-color;
+			}
+
+			&:focus-within {
+				border: 2px solid g.$accent-color;
+			}
+
+			.searchResultsContainer {
+				display: none;
+				&.active {
+					display: block;
+					position: absolute;
+					width: 95%;
+					height: 15rem;
+					background-color: g.$dark-color;
+					top: 105%;
+					list-style: none;
+					z-index: 5;
+					overflow: scroll;
+				}
+
+				.searchResult {
+					width: 100%;
+					display: flex;
+					justify-content: space-between;
+					padding: 0.5rem;
+
+					p {
+						font-size: 1.2rem;
+						color: #fff;
+						font-weight: bold;
+					}
+
+					button {
+						border: 0;
+						background-color: g.$accent-color;
+						padding: 0.25rem 0.5rem;
+						border-radius: 20px;
+					}
+				}
+			}
+		}
 	}
 
 	.userWorkoutItem {
@@ -330,11 +400,9 @@
 				color: g.$accent-color;
 
 				&.check {
-					color: #48D366
+					color: #48d366;
 				}
 			}
-
-			
 
 			p {
 				font-size: 1.5rem;
@@ -344,7 +412,6 @@
 				width: 100%;
 				display: flex;
 				margin-top: 0.5rem;
-
 
 				.setInfoGroup {
 					flex-basis: 50%;
@@ -375,8 +442,6 @@
 					}
 				}
 			}
-
-			
 		}
 
 		.arrowContainer {
