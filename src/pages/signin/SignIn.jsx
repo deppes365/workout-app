@@ -10,6 +10,7 @@ function SignIn() {
 
 	useEffect(() => {
 		setMenuActive(false);
+		// eslint-disable-next-line
 	}, []);
 
 	const [formData, setFormData] = useState({

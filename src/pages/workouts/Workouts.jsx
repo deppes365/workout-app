@@ -46,6 +46,7 @@ function Workouts() {
 		return () => {
 			isMounted.current = false;
 		};
+		// eslint-disable-next-line
 	}, [isMounted]);
 
 	// Capitalizes the first letter of each word of the workout

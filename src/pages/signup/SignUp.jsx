@@ -51,7 +51,9 @@ function SignUp() {
 
 	const { setMenuActive } = useContext(AppContext);
 
-	useEffect(() => setMenuActive(false), []);
+	useEffect(() => setMenuActive(false), 
+	// eslint-disable-next-line
+	[]);
 
 	const onChange = e => {
 		setFormData(prevState => ({
