@@ -77,7 +77,7 @@ function SignUp() {
 		if (!userCreated) {
 			try {
 				const auth = getAuth();
-				const userCredential = await createUserWithEmailAndPassword(
+				await createUserWithEmailAndPassword(
 					auth,
 					email,
 					password
