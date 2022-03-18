@@ -20,25 +20,27 @@ function Workouts() {
 	const [searchResults, setSearchResults] = useState([]);
 	const [showSearchResults, setShowSearchResults] = useState(false);
 
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 
 	const auth = getAuth();
 	useEffect(() => {
-		if(auth.currentUser === null || auth.currentUser === undefined) {
-			navigate('/')
-			return
+		if (auth.currentUser === null || auth.currentUser === undefined) {
+			navigate('/');
+			return;
 		}
 
 		setActiveLink(window.location.pathname);
 
 		if (isMounted) {
-			const getUserWorkouts = async () => {
-				const docRef = doc(db, 'users', auth.currentUser.uid);
-				const docSnap = await getDoc(docRef);
-				setUserWorkouts(docSnap.data().workouts);
-			};
+			if (!userWorkouts.length) {
+				const getUserWorkouts = async () => {
+					const docRef = doc(db, 'users', auth.currentUser.uid);
+					const docSnap = await getDoc(docRef);
+					setUserWorkouts(docSnap.data().workouts);
+				};
 
-			getUserWorkouts();
+				getUserWorkouts();
+			}
 		}
 
 		return () => {
@@ -87,8 +89,6 @@ function Workouts() {
 		setShowSearchResults(true);
 	};
 
-	
-
 	return (
 		<div id="workouts" className="page">
 			<div className="container">
@@ -106,23 +106,40 @@ function Workouts() {
 						id="workoutSearch"
 						value={workoutSearch}
 						onChange={onChange}
+						autoComplete="off"
 					/>
-					{workoutSearch.length === 0 ? <FaSearch className="icon" /> : <FaTimes className='icon' onClick={() => {
-						setWorkoutSearch('')	
-						setSearchResults([])
-						setShowSearchResults(false)
-						}}/>}
+					{workoutSearch.length === 0 ? (
+						<FaSearch className="icon" />
+					) : (
+						<FaTimes
+							className="icon"
+							onClick={() => {
+								setWorkoutSearch('');
+								setSearchResults([]);
+								setShowSearchResults(false);
+							}}
+						/>
+					)}
 					<ul
 						className={`searchResultsContainer ${
 							showSearchResults ? 'active' : ''
 						}`}
 					>
 						{showSearchResults && searchResults.length === 0 && (
-							<SearchResult key={1} result={'No workout found.'} showButton={false} />
+							<SearchResult
+								key={1}
+								result={'No workout found.'}
+								showButton={false}
+							/>
 						)}
 						{searchResults.map((result, i) => (
-							<li>
-								<SearchResult key={i} result={result} showButton={true} setShowSearchResults={setShowSearchResults} setWorkoutSearch={setWorkoutSearch}/>
+							<li key={i}>
+								<SearchResult
+									result={result}
+									showButton={true}
+									setShowSearchResults={setShowSearchResults}
+									setWorkoutSearch={setWorkoutSearch}
+								/>
 							</li>
 						))}
 					</ul>
