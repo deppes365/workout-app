@@ -7,7 +7,7 @@ $menu-height: 2.5rem;
 	position: relative;
 	background-color: g.$accent-color;
 	min-height: 100vh;
-	padding-top: $menu-height;
+	// padding-top: $menu-height;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -46,7 +46,7 @@ $menu-height: 2.5rem;
 
 		.hamburger {
 			position: relative;
-			width: 2.25rem;
+			width: 2rem;
 			height: 2.25rem;
 
 			.top-line,
@@ -165,9 +165,11 @@ $menu-height: 2.5rem;
 	.page {
 		width: 100%;
 		height: calc(100vh - $menu-height);
-		background-color: #e9f3ed;
+		background-color: #fff;
 		display: flex;
 		justify-content: center;
+		margin-top: $menu-height;
+		scroll-margin-top: $menu-height;
 	}
 
 	#bottom-nav {
@@ -353,10 +355,6 @@ $menu-height: 2.5rem;
 			padding: 0.25rem;
 			border-radius: 20px;
 			box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
-
-			&.active {
-				background-color: #ff2020;
-			}
 		}
 
 		.workoutTitle {
@@ -397,7 +395,7 @@ $menu-height: 2.5rem;
 			&.active {
 				height: 5rem;
 				border-top: 2px solid g.$accent-color;
-				background-color: #e9f3ed;
+				background-color: #fff;
 				color: g.$dark-color;
 			}
 
@@ -441,6 +439,7 @@ $menu-height: 2.5rem;
 							border: 0;
 							color: g.$dark-color;
 							background-color: transparent;
+							opacity: 1;
 						}
 
 						&:enabled {

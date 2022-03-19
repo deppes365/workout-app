@@ -5,23 +5,16 @@ import { FaChevronUp } from 'react-icons/fa';
 
 function UserWorkoutItem({ sets, workout, equipment }) {
 	const [showSets, setShowSets] = useState(false);
-	const [cancelSet, setCancelSet] = useState(false);
+
 	const [editSets, setEditSets] = useState(false);
 	const [userSets, setUserSets] = useState(sets);
-
-	
 
 	const handleEdit = () => {
 		setEditSets(!editSets);
 	};
 
 	const onClick = () => {
-		if (cancelSet) {
-			setCancelSet(!cancelSet);
-			setShowSets(!showSets);
-		} else {
-			setShowSets(!showSets);
-		}
+		setShowSets(!showSets);
 	};
 
 	const newSet = {
@@ -33,12 +26,7 @@ function UserWorkoutItem({ sets, workout, equipment }) {
 	const addSet = e => {
 		e.preventDefault();
 
-		if (showSets) {
-			setCancelSet(!cancelSet);
-		} else {
-			setShowSets(!showSets);
-			setCancelSet(!cancelSet);
-		}
+		setShowSets(!showSets);
 
 		setUserSets([...userSets, newSet]);
 	};
@@ -46,11 +34,8 @@ function UserWorkoutItem({ sets, workout, equipment }) {
 	return (
 		<>
 			<div className="userWorkoutItem">
-				<button
-					className={`addSetBtn ${cancelSet ? 'active' : ''}`}
-					onClick={addSet}
-				>
-					{cancelSet ? 'Cancel' : 'Add Set'}
+				<button className="addSetBtn" onClick={addSet}>
+					Add Set
 				</button>
 				<h1 className="workoutTitle">{workout}</h1>
 				<h3 className="equipmentTitle">{`(${equipment})`}</h3>
