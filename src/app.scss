@@ -1,11 +1,13 @@
 @use './global.scss' as g;
 
+$menu-height: 2.5rem;
+
 .App {
 	width: 100%;
 	position: relative;
 	background-color: g.$accent-color;
 	min-height: 100vh;
-	padding-top: 3.5rem;
+	padding-top: $menu-height;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -15,6 +17,7 @@
 		max-width: 1200px;
 		display: flex;
 		justify-content: space-between;
+		align-items: center;
 		padding: 1rem;
 	}
 
@@ -22,7 +25,7 @@
 		position: fixed;
 		top: 0;
 		left: 0;
-		height: 3.5rem;
+		height: $menu-height;
 		width: 100%;
 		background-color: #e9f3ed;
 		display: flex;
@@ -33,6 +36,7 @@
 		.logo {
 			h1 {
 				color: g.$dark-color;
+				font-size: 1.5rem;
 
 				span {
 					color: g.$accent-color;
@@ -97,9 +101,9 @@
 
 	.menu {
 		position: fixed;
-		top: 3.5rem;
+		top: $menu-height;
 		left: 0;
-		height: calc(100vh - 3.5rem);
+		height: calc(100vh - $menu-height);
 		width: 100%;
 		display: flex;
 		justify-content: center;
@@ -160,7 +164,7 @@
 
 	.page {
 		width: 100%;
-		height: calc(100vh - 3.5rem);
+		height: calc(100vh - $menu-height);
 		background-color: #e9f3ed;
 		display: flex;
 		justify-content: center;
@@ -170,7 +174,7 @@
 		position: fixed;
 		bottom: 0;
 		left: 0;
-		height: 3.5rem;
+		height: 3rem;
 		width: 100%;
 		display: flex;
 		justify-content: center;
@@ -185,12 +189,13 @@
 			display: inline-flex;
 			border-radius: 50%;
 			overflow: hidden;
-			padding: 0.5rem;
+			padding: 0.25rem;
+
 			.bottom-nav-icon {
 				color: g.$dark-color;
 				font-size: 2rem;
 				display: inline-block;
-				padding: 0.25rem;
+				padding: 0.2rem;
 			}
 
 			&.active {
@@ -268,7 +273,7 @@
 				border: 0;
 				background-color: transparent;
 				font-size: 1.2rem;
-				text-align: center;
+				
 				&:focus {
 					outline: 0;
 				}
