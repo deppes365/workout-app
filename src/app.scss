@@ -318,7 +318,6 @@ $breakpoints: (
 						p {
 							margin-top: 0.5rem;
 							text-align: center;
-							font-weight: 500;
 						}
 					}
 				}
@@ -507,6 +506,7 @@ $breakpoints: (
 				height: 15rem;
 				border-top: 2px solid g.$accent-color;
 				overflow: scroll;
+				
 			}
 		}
 
@@ -597,7 +597,7 @@ $breakpoints: (
 
 						&:disabled {
 							border: 0;
-							color: g.$dark-color;
+							color: g.$jet-black;
 							background-color: transparent;
 							opacity: 1;
 						}
