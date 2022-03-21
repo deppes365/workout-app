@@ -9,7 +9,7 @@ import {toast} from 'react-toastify'
 function Set({ setNum, reps, weight, workoutId }) {
 	const [editSets, setEditSets] = useState(false);
 
-	const {userWorkouts, setUserWorkouts} = useContext(WorkoutContext);
+	const {setUserWorkouts} = useContext(WorkoutContext);
 
 	// keeps the previous data
 	const [initialReps, setInitialReps] = useState(reps);

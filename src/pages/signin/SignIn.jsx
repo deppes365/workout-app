@@ -22,8 +22,6 @@ function SignIn() {
 		
 		onAuthStateChanged(auth, user => {
 			if (user) {
-				
-				const uid = user.uid;
 				navigate('/home')
 			} else {
 				return
