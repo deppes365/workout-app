@@ -213,12 +213,7 @@ $breakpoints: (
 		}
 	} // Menu
 
-	.appContainer {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 100%;
-	}
+	
 
 	.page {
 		width: 100%;
@@ -234,14 +229,14 @@ $breakpoints: (
 		position: fixed;
 		bottom: 0;
 		left: 0;
-		height: 3.5rem;
+		height: 4.5rem;
 		width: 100%;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		background-color: g.$dark-color;
 		border-top: 2px solid g.$accent-color;
-		padding-bottom: 0.5rem;
+		padding-bottom: 1rem;
 
 		@include lg() {
 			height: 4rem;
