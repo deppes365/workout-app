@@ -237,6 +237,10 @@ $breakpoints: (
 		border-top: 2px solid g.$accent-color;
 		padding-bottom: 1rem;
 
+		.container {
+			width: 95%;
+		}
+
 		@include lg() {
 			height: 4rem;
 
