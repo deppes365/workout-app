@@ -31,15 +31,15 @@ function App() {
 					<div className={`App ${darkMode ? 'dark-mode' : ''}`}>
 						<Header />
 						<Menu toggleTheme={toggleTheme} darkMode={darkMode} />
-						<div className="appContainer">
-							<Routes>
-								<Route path="/home" element={<Home />} />
-								<Route path="/" element={<SignIn />} />
-								<Route path="/register" element={<SignUp />} />
-								<Route path="/register-2" element={<SignUp2 />} />
-								<Route path="/workouts" element={<Workouts />} />
-							</Routes>
-						</div>
+
+						<Routes>
+							<Route path="/home" element={<Home />} />
+							<Route path="/" element={<SignIn />} />
+							<Route path="/register" element={<SignUp />} />
+							<Route path="/register-2" element={<SignUp2 />} />
+							<Route path="/workouts" element={<Workouts />} />
+						</Routes>
+
 						<BottomNav />
 					</div>
 				</Router>
