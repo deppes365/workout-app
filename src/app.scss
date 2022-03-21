@@ -1,6 +1,52 @@
 @use './global.scss' as g;
 
+
 $menu-height: 2.5rem;
+
+
+$breakpoints: (
+    "xs": 480px,
+    "sm": 600px,
+    "md": 720px,
+    "lg": 960px,
+    "xl": 1200px
+);
+
+@mixin xs {
+    @media (min-width: map-get($breakpoints, "xs")) {
+        @content;
+    }
+}
+
+@mixin sm {
+    @media (min-width: map-get($breakpoints, "sm")) {
+        @content;
+    }
+}
+
+@mixin md {
+    @media (min-width: map-get($breakpoints, "md")) {
+        @content;
+    }
+}
+
+@mixin lg {
+    @media (min-width: map-get($breakpoints, "lg")) {
+        @content;
+    }
+}
+
+@mixin xl {
+    @media (min-width: map-get($breakpoints, "xl")) {
+        @content;
+    }
+}
+
+@mixin breakpoint($bp: 0) {
+    @media (min-width: $bp) {
+        @content
+    }
+}
 
 .App {
 	width: 100%;
@@ -350,12 +396,20 @@ $menu-height: 2.5rem;
 			flex-wrap: wrap;
 			width: 100%;
 			padding-top: 1rem;
+
+			@include sm() {
+				flex-direction: row;
+				justify-content: center;
+				align-items: flex-start;
+			}
+
+			
 		}
 	}
 
 	.userWorkoutItem {
 		width: 100%;
-		max-width: 400px;
+		max-width: 375px;
 		height: auto;
 		background-color: #fff;
 		color: g.$dark-color;
@@ -457,20 +511,23 @@ $menu-height: 2.5rem;
 					display: flex;
 					justify-content: flex-end;
 					align-items: center;
-					gap: 0.5rem;
+					margin-right: 0.5rem;
+
 
 					&:last-of-type {
 						justify-content: flex-start;
 					}
 
 					label {
-						font-size: 1.5rem;
+						font-size: 1.2rem;
+						margin-right: 0.25rem;
 					}
 
 					input {
-						width: 4rem;
+						width: 3.6rem;
 						font-size: 1.5rem;
-						text-align: left;
+						text-align: center;
+						margin-right: 0;
 
 						&:disabled {
 							border: 0;
@@ -480,9 +537,15 @@ $menu-height: 2.5rem;
 						}
 
 						&:enabled {
-							border: 0;
+							border: 2px solid g.$accent-color;
+							border-radius: 5px;
 							background-color: #fff;
+							color: g.$dark-color;
 						}
+					}
+
+					span {
+						font-size: 1.2rem;
 					}
 				}
 			}

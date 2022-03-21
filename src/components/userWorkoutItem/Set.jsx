@@ -87,6 +87,7 @@ function Set({ setNum, reps, weight, showSets, workoutId }) {
 						disabled={!editSets}
 						onChange={e => setStateReps(e.target.value)}
 					/>
+					<span></span>
 				</div>
 				<div className="setInfoGroup">
 					<label htmlFor="weight">Weight:</label>
@@ -98,6 +99,7 @@ function Set({ setNum, reps, weight, showSets, workoutId }) {
 						disabled={!editSets}
 						onChange={e => setStateWeight(e.target.value)}
 					/>
+					<span>Lbs</span>
 				</div>
 			</div>
 		</form>
