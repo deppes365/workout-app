@@ -98,7 +98,7 @@ function Workouts() {
 	return (
 		<div id="workouts" className="page">
 			<div className="container">
-				<h1>Workouts</h1>
+				
 				<div
 					className="workoutSearchBar"
 					// onBlur={() => {
