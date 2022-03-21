@@ -1,51 +1,49 @@
 @use './global.scss' as g;
 
-
 $menu-height: 2.5rem;
 
-
 $breakpoints: (
-    "xs": 480px,
-    "sm": 600px,
-    "md": 720px,
-    "lg": 960px,
-    "xl": 1200px
+	'xs': 480px,
+	'sm': 600px,
+	'md': 720px,
+	'lg': 960px,
+	'xl': 1200px,
 );
 
 @mixin xs {
-    @media (min-width: map-get($breakpoints, "xs")) {
-        @content;
-    }
+	@media (min-width: map-get($breakpoints, 'xs')) {
+		@content;
+	}
 }
 
 @mixin sm {
-    @media (min-width: map-get($breakpoints, "sm")) {
-        @content;
-    }
+	@media (min-width: map-get($breakpoints, 'sm')) {
+		@content;
+	}
 }
 
 @mixin md {
-    @media (min-width: map-get($breakpoints, "md")) {
-        @content;
-    }
+	@media (min-width: map-get($breakpoints, 'md')) {
+		@content;
+	}
 }
 
 @mixin lg {
-    @media (min-width: map-get($breakpoints, "lg")) {
-        @content;
-    }
+	@media (min-width: map-get($breakpoints, 'lg')) {
+		@content;
+	}
 }
 
 @mixin xl {
-    @media (min-width: map-get($breakpoints, "xl")) {
-        @content;
-    }
+	@media (min-width: map-get($breakpoints, 'xl')) {
+		@content;
+	}
 }
 
 @mixin breakpoint($bp: 0) {
-    @media (min-width: $bp) {
-        @content
-    }
+	@media (min-width: $bp) {
+		@content;
+	}
 }
 
 .App {
@@ -53,7 +51,6 @@ $breakpoints: (
 	position: relative;
 	background-color: g.$accent-color;
 	min-height: 100vh;
-	// padding-top: $menu-height;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -208,6 +205,15 @@ $breakpoints: (
 		}
 	} // Menu
 
+	.appContainer {
+		width: 100%;
+
+		@include lg() {
+			position: absolute;
+			left: 5rem;
+			width: calc(100vw - 5rem);
+		}
+	}
 	.page {
 		width: 100%;
 		height: calc(100vh - $menu-height);
@@ -229,6 +235,20 @@ $breakpoints: (
 		align-items: center;
 		background-color: g.$dark-color;
 		border-top: 2px solid g.$accent-color;
+
+		@include lg(){
+			.container {
+				flex-direction: column;
+				justify-content: space-between;
+				align-items: center;
+				height: 60%;
+			}
+			flex-direction: column;
+			top: 2.5rem;
+			left: 0;
+			width: 5rem;
+			height: calc(100vh - 2.5rem);
+		}
 
 		&.inactive {
 			display: none;
@@ -337,7 +357,7 @@ $breakpoints: (
 				border: 0;
 				background-color: transparent;
 				font-size: 1.2rem;
-				
+
 				&:focus {
 					outline: 0;
 				}
@@ -409,8 +429,6 @@ $breakpoints: (
 				justify-content: center;
 				align-items: flex-start;
 			}
-
-			
 		}
 	}
 
@@ -426,6 +444,10 @@ $breakpoints: (
 		box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 		overflow: hidden;
 
+		&.active {
+			height: 20rem;
+		}
+
 		.addSetBtn {
 			position: absolute;
 			top: 0.5rem;
@@ -434,7 +456,7 @@ $breakpoints: (
 			background-color: g.$accent-color;
 			color: g.$jet-black;
 			font-size: 1rem;
-			font-weight: 600;
+			font-weight: 400;
 			padding: 0.25rem;
 			border-radius: 20px;
 			box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
@@ -462,10 +484,22 @@ $breakpoints: (
 			font-weight: 500;
 		}
 
+		.workoutDetails {
+			width: 100%;
+			height: 0;
+			transition: 0.3s ease;
+			background-color: g.$dark-color;
+			&.active {
+				height: 15rem;
+				border-top: 2px solid g.$accent-color;
+				overflow: scroll;
+			}
+		}
+
 		.setContainer {
 			width: 100%;
 			color: #fff;
-			height: 0;
+			height: 5rem;
 			overflow: hidden;
 			transition: 0.3s ease;
 			background-color: transparent;
@@ -474,6 +508,14 @@ $breakpoints: (
 			align-items: center;
 			justify-content: center;
 			position: relative;
+			color: g.$dark-color;
+			border-top:  1px solid g.$accent-color;
+			border-bottom:  1px solid g.$accent-color;
+			background-color: #fff;
+
+			&:first-of-type {
+				border-top: 0;
+			}
 
 			&.active {
 				height: 5rem;
@@ -484,11 +526,15 @@ $breakpoints: (
 			.setNumTitle {
 				position: absolute;
 				top: 0;
-				left: 0;
+				left: 50%;
+				transform: translateX(-50%);
 				padding: 0.25rem 0.5rem;
 				font-size: 1.2rem;
 				background-color: g.$accent-color;
-				border-radius: 0 0 20px 0;
+				border-radius: 0 0 20px 20px;
+				width: 5rem;
+				text-align: center;
+				color: g.$jet-black;
 			}
 
 			.editIcon {
@@ -510,7 +556,7 @@ $breakpoints: (
 			.setInfoContainer {
 				width: 100%;
 				display: flex;
-				margin: 2rem auto 1rem ;
+				margin: 3rem auto 1rem;
 				justify-content: center;
 
 				.setInfoGroup {
@@ -519,7 +565,6 @@ $breakpoints: (
 					justify-content: flex-end;
 					align-items: center;
 					margin-right: 0.5rem;
-
 
 					&:last-of-type {
 						justify-content: flex-start;

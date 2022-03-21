@@ -24,13 +24,13 @@ function UserWorkoutItem({ sets, workout, equipment, id }) {
 		if (!showSets) {
 			setShowSets(!showSets);
 		}
-		
+
 		setUserSets([...userSets, newSet]);
 	};
 
 	return (
 		<>
-			<div className="userWorkoutItem">
+			<div className='userWorkoutItem'>
 				<button className="addSetBtn" onClick={addSet}>
 					Add Set
 				</button>
@@ -40,14 +40,13 @@ function UserWorkoutItem({ sets, workout, equipment, id }) {
 					<p>Sets: {sets.length}</p>
 					<p>Max Weight: 225 lbs</p>
 				</div>
-				<div className="workoutDetails">
+				<div className={`workoutDetails ${showSets ? 'active' : ''}`}>
 					{userSets.map(({ set, reps, weight }, i) => (
 						<Set
 							key={i}
 							setNum={set}
 							reps={reps}
 							weight={weight}
-							showSets={showSets}
 							workoutId={id}
 						/>
 					))}

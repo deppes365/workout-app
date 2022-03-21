@@ -6,7 +6,7 @@ import { db } from '../../firebase.config';
 import { updateDoc, doc, getDoc } from 'firebase/firestore';
 import {toast} from 'react-toastify'
 
-function Set({ setNum, reps, weight, showSets, workoutId }) {
+function Set({ setNum, reps, weight, workoutId }) {
 	const [editSets, setEditSets] = useState(false);
 
 	const {userWorkouts, setUserWorkouts} = useContext(WorkoutContext);
@@ -69,7 +69,7 @@ function Set({ setNum, reps, weight, showSets, workoutId }) {
 	};
 
 	return (
-		<form className={`setContainer ${showSets ? 'active' : ''}`}>
+		<form className='setContainer'>
 			{editSets ? (
 				<FaCheckSquare className="editIcon check" onClick={onSave} />
 			) : (

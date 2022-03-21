@@ -18,11 +18,11 @@ import Menu from './components/menu/Menu';
 import BottomNav from './components/bottomNav/BottomNav';
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false)
+	const [darkMode, setDarkMode] = useState(false);
 
-  const toggleTheme = () => {
-    setDarkMode(!darkMode)
-  }
+	const toggleTheme = () => {
+		setDarkMode(!darkMode);
+	};
 
 	return (
 		<WorkoutProvider>
@@ -30,18 +30,20 @@ function App() {
 				<Router>
 					<div className={`App ${darkMode ? 'dark-mode' : ''}`}>
 						<Header />
-						<Menu toggleTheme={toggleTheme} darkMode={darkMode}/>
-						<Routes>
-							<Route path="/home" element={<Home />} />
-							<Route path="/" element={<SignIn />} />
-							<Route path="/register" element={<SignUp />} />
-							<Route path="/register-2" element={<SignUp2 />} />
-							<Route path="/workouts" element={<Workouts />} />
-						</Routes>
+						<Menu toggleTheme={toggleTheme} darkMode={darkMode} />
+						<div className="appContainer">
+							<Routes>
+								<Route path="/home" element={<Home />} />
+								<Route path="/" element={<SignIn />} />
+								<Route path="/register" element={<SignUp />} />
+								<Route path="/register-2" element={<SignUp2 />} />
+								<Route path="/workouts" element={<Workouts />} />
+							</Routes>
+						</div>
 						<BottomNav />
 					</div>
 				</Router>
-				<ToastContainer autoClose={1000}/>
+				<ToastContainer autoClose={1000} />
 			</AppProvider>
 		</WorkoutProvider>
 	);

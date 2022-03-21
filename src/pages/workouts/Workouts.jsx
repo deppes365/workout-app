@@ -101,9 +101,6 @@ function Workouts() {
 				
 				<div
 					className="workoutSearchBar"
-					// onBlur={() => {
-					// 	setShowSearchResults(false);
-					// }}
 				>
 					<input
 						type="text"
