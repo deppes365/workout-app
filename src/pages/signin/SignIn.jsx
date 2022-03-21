@@ -1,15 +1,35 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './signin.scss';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import {
+	getAuth,
+	signInWithEmailAndPassword,
+	onAuthStateChanged,
+} from 'firebase/auth';
 import AppContext from '../../context/appContext/AppContext';
 import { toast } from 'react-toastify';
 
 function SignIn() {
 	const { setMenuActive } = useContext(AppContext);
 
+	const navigate = useNavigate();
+
+	const auth = getAuth();
+
 	useEffect(() => {
 		setMenuActive(false);
+
+		
+		onAuthStateChanged(auth, user => {
+			if (user) {
+				
+				const uid = user.uid;
+				navigate('/home')
+			} else {
+				return
+			}
+		});
+
 		// eslint-disable-next-line
 	}, []);
 
@@ -19,7 +39,6 @@ function SignIn() {
 	});
 
 	const { email, password } = formData;
-	const navigate = useNavigate();
 
 	const onChange = e => {
 		setFormData(prevState => ({
@@ -32,7 +51,7 @@ function SignIn() {
 		e.preventDefault();
 
 		try {
-			const auth = getAuth();
+			
 
 			const userCredential = await signInWithEmailAndPassword(
 				auth,
@@ -45,11 +64,11 @@ function SignIn() {
 			}
 		} catch (error) {
 			console.log(error.code);
-			if(error.code === 'auth/wrong-password') {
-				toast.error('Wrong password.')
+			if (error.code === 'auth/wrong-password') {
+				toast.error('Wrong password.');
 			}
-			if(error.code === 'auth/user-not-found') {
-				toast.error('No account found for this email.')
+			if (error.code === 'auth/user-not-found') {
+				toast.error('No account found for this email.');
 			}
 		}
 	};
@@ -85,7 +104,9 @@ function SignIn() {
 				<button>Sign In</button>
 			</form>
 
-			<p>Don't have an account? <Link to="/register">Register</Link></p>
+			<p>
+				Don't have an account? <Link to="/register">Register</Link>
+			</p>
 		</div>
 	);
 }

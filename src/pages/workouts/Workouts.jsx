@@ -36,7 +36,12 @@ function Workouts() {
 				const getUserWorkouts = async () => {
 					const docRef = doc(db, 'users', auth.currentUser.uid);
 					const docSnap = await getDoc(docRef);
-					setUserWorkouts(docSnap.data().workouts);
+
+					if (docSnap.data().workouts.length === 0) {
+						setUserWorkouts([]);
+					} else {
+						setUserWorkouts(docSnap.data().workouts);
+					}
 				};
 
 				getUserWorkouts();
@@ -145,16 +150,27 @@ function Workouts() {
 						))}
 					</ul>
 				</div>
-
-				{userWorkouts.map(({ sets, type, workout, equipment }, i) => (
-					<UserWorkoutItem
-						key={i}
-						sets={sets}
-						type={type}
-						workout={workout}
-						equipment={equipment}
-					/>
-				))}
+				<div className="workoutsContainer">
+				{userWorkouts.length > 0 ? (
+					userWorkouts.map(({ sets, type, workout, equipment, _id }, i) => (
+						<UserWorkoutItem
+							key={i}
+							id={_id}
+							sets={sets}
+							type={type}
+							workout={workout}
+							equipment={equipment}
+						/>
+					))
+				) : (
+					<>
+					<h1 className='noWorkouts'>
+						Looks like you're new here!
+					</h1>
+					<h1 className='noWorkouts'>Search for a workout above to get started!</h1>
+					</>
+				)}
+				</div>
 			</div>
 		</div>
 	);

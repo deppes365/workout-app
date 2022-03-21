@@ -1,23 +1,18 @@
 import React, { useState } from 'react';
 import Set from './Set';
-
+import { v4 as uuidv4 } from 'uuid';
 import { FaChevronUp } from 'react-icons/fa';
 
-function UserWorkoutItem({ sets, workout, equipment }) {
+function UserWorkoutItem({ sets, workout, equipment, id }) {
 	const [showSets, setShowSets] = useState(false);
-
-	const [editSets, setEditSets] = useState(false);
 	const [userSets, setUserSets] = useState(sets);
-
-	const handleEdit = () => {
-		setEditSets(!editSets);
-	};
 
 	const onClick = () => {
 		setShowSets(!showSets);
 	};
 
 	const newSet = {
+		_id: uuidv4(),
 		set: userSets.length + 1,
 		reps: 0,
 		weight: 0,
@@ -26,8 +21,10 @@ function UserWorkoutItem({ sets, workout, equipment }) {
 	const addSet = e => {
 		e.preventDefault();
 
-		setShowSets(!showSets);
-
+		if (!showSets) {
+			setShowSets(!showSets);
+		}
+		
 		setUserSets([...userSets, newSet]);
 	};
 
@@ -51,8 +48,7 @@ function UserWorkoutItem({ sets, workout, equipment }) {
 							reps={reps}
 							weight={weight}
 							showSets={showSets}
-							handleEdit={handleEdit}
-							editSets={editSets}
+							workoutId={id}
 						/>
 					))}
 				</div>
