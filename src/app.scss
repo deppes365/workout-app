@@ -1,6 +1,7 @@
 @use './global.scss' as g;
 
 $menu-height: 2.5rem;
+$bottom-nav-height: 4.5rem;
 
 $breakpoints: (
 	'xs': 480px,
@@ -154,7 +155,7 @@ $breakpoints: (
 		position: fixed;
 		top: $menu-height;
 		left: 0;
-		height: calc(100vh - $menu-height);
+		height: calc(100vh - $menu-height - $bottom-nav-height);
 		width: 100%;
 		display: flex;
 		justify-content: center;
@@ -213,8 +214,6 @@ $breakpoints: (
 		}
 	} // Menu
 
-	
-
 	.page {
 		width: 100%;
 		height: calc(100vh - $menu-height);
@@ -229,7 +228,7 @@ $breakpoints: (
 		position: fixed;
 		bottom: 0;
 		left: 0;
-		height: 4.5rem;
+		height: $bottom-nav-height;
 		width: 100%;
 		display: flex;
 		justify-content: center;
@@ -505,7 +504,6 @@ $breakpoints: (
 				height: 15rem;
 				border-top: 2px solid g.$accent-color;
 				overflow: scroll;
-				
 			}
 		}
 
@@ -522,8 +520,8 @@ $breakpoints: (
 			justify-content: center;
 			position: relative;
 			color: g.$dark-color;
-			border-top:  1px solid g.$accent-color;
-			border-bottom:  1px solid g.$accent-color;
+			border-top: 1px solid g.$accent-color;
+			border-bottom: 1px solid g.$accent-color;
 			background-color: #fff;
 
 			&:first-of-type {
