@@ -58,7 +58,7 @@ function Home() {
 				<div className="overview-container">
 					<div className="grid-item-container">
 						<div className="grid-item">
-							<p>Workouts This Week</p>
+							<p>Cardio Workouts This Week</p>
 							<FaRunning className="overview-icon" />
 						</div>
 						<div className="grid-item">

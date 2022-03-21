@@ -76,10 +76,18 @@ $breakpoints: (
 		align-items: center;
 		z-index: 100;
 
+		@include lg() {
+			height: 3rem;
+		}
+
 		.logo {
 			h1 {
 				color: #fff;
 				font-size: 1.5rem;
+
+				@include lg() {
+					font-size: 1.75rem;
+				}
 
 				span {
 					color: g.$accent-color;
@@ -207,13 +215,8 @@ $breakpoints: (
 
 	.appContainer {
 		width: 100%;
-
-		@include lg() {
-			position: absolute;
-			left: 5rem;
-			width: calc(100vw - 5rem);
-		}
 	}
+
 	.page {
 		width: 100%;
 		height: calc(100vh - $menu-height);
@@ -236,18 +239,12 @@ $breakpoints: (
 		background-color: g.$dark-color;
 		border-top: 2px solid g.$accent-color;
 
-		@include lg(){
+		@include lg() {
+			height: 4rem;
+
 			.container {
-				flex-direction: column;
-				justify-content: space-between;
-				align-items: center;
-				height: 60%;
+				width: 50%;
 			}
-			flex-direction: column;
-			top: 2.5rem;
-			left: 0;
-			width: 5rem;
-			height: calc(100vh - 2.5rem);
 		}
 
 		&.inactive {
@@ -269,6 +266,10 @@ $breakpoints: (
 				font-size: 2rem;
 				display: inline-block;
 				padding: 0.2rem;
+
+				@include lg() {
+					font-size: 2.5rem;
+				}
 			}
 
 			&.active {
@@ -316,6 +317,8 @@ $breakpoints: (
 
 						p {
 							margin-top: 0.5rem;
+							text-align: center;
+							font-weight: 500;
 						}
 					}
 				}
@@ -344,6 +347,7 @@ $breakpoints: (
 
 		.workoutSearchBar {
 			width: 100%;
+			max-width: 600px;
 			display: flex;
 			justify-content: center;
 			align-items: center;
@@ -352,6 +356,7 @@ $breakpoints: (
 			border-radius: 30px;
 			border: 1px solid g.$dark-color;
 			position: relative;
+			margin-top: 0.5rem;
 
 			input {
 				border: 0;
@@ -424,10 +429,19 @@ $breakpoints: (
 			width: 100%;
 			padding-top: 1rem;
 
-			@include sm() {
+			@include md() {
 				flex-direction: row;
+				align-items: flex-start;
+				justify-content: center;
+			}
+
+			@include lg() {
 				justify-content: center;
 				align-items: flex-start;
+			}
+
+			@include xl() {
+				justify-content: flex-start;
 			}
 		}
 	}
@@ -577,7 +591,7 @@ $breakpoints: (
 
 					input {
 						width: 3.6rem;
-						font-size: 1.5rem;
+						font-size: 1.25rem;
 						text-align: center;
 						margin-right: 0;
 
