@@ -14,7 +14,6 @@ import SearchResult from '../../components/SearchResult';
 function Workouts() {
 	const { setActiveLink } = useContext(AppContext);
 	const { userWorkouts, setUserWorkouts } = useContext(WorkoutContext);
-	const isMounted = useRef(true);
 
 	const [workoutSearch, setWorkoutSearch] = useState('');
 	const [searchResults, setSearchResults] = useState([]);
@@ -24,35 +23,19 @@ function Workouts() {
 
 	const auth = getAuth();
 	useEffect(() => {
+
+		// If user is not signed in, redirect to sign in
 		if (auth.currentUser === null || auth.currentUser === undefined) {
 			navigate('/');
 			return;
 		}
 
+		// Sets bottom nav active link to home page
 		setActiveLink(window.location.pathname);
 
-		if (isMounted) {
-			if (!userWorkouts.length) {
-				const getUserWorkouts = async () => {
-					const docRef = doc(db, 'users', auth.currentUser.uid);
-					const docSnap = await getDoc(docRef);
-
-					if (docSnap.data().workouts.length === 0) {
-						setUserWorkouts([]);
-					} else {
-						setUserWorkouts(docSnap.data().workouts);
-					}
-				};
-
-				getUserWorkouts();
-			}
-		}
-
-		return () => {
-			isMounted.current = false;
-		};
+		
 		// eslint-disable-next-line
-	}, [isMounted]);
+	}, []);
 
 	// Capitalizes the first letter of each word of the workout
 	const formatString = str => {
@@ -145,7 +128,6 @@ function Workouts() {
 					</ul>
 				</div>
 				<div className="workoutsContainer">
-							
 					{/* <h3 className="workoutDate">Monday, March 21st, 2022</h3> */}
 					{userWorkouts.length > 0 ? (
 						userWorkouts.map(({ sets, type, workout, equipment, _id }, i) => (
