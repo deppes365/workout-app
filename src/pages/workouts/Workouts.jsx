@@ -98,10 +98,7 @@ function Workouts() {
 	return (
 		<div id="workouts" className="page">
 			<div className="container">
-				
-				<div
-					className="workoutSearchBar"
-				>
+				<div className="workoutSearchBar">
 					<input
 						type="text"
 						placeholder="Search to add workout"
@@ -148,25 +145,27 @@ function Workouts() {
 					</ul>
 				</div>
 				<div className="workoutsContainer">
-				{userWorkouts.length > 0 ? (
-					userWorkouts.map(({ sets, type, workout, equipment, _id }, i) => (
-						<UserWorkoutItem
-							key={i}
-							id={_id}
-							sets={sets}
-							type={type}
-							workout={workout}
-							equipment={equipment}
-						/>
-					))
-				) : (
-					<>
-					<h1 className='noWorkouts'>
-						Looks like you're new here!
-					</h1>
-					<h1 className='noWorkouts'>Search for a workout above to get started!</h1>
-					</>
-				)}
+							
+					{/* <h3 className="workoutDate">Monday, March 21st, 2022</h3> */}
+					{userWorkouts.length > 0 ? (
+						userWorkouts.map(({ sets, type, workout, equipment, _id }, i) => (
+							<UserWorkoutItem
+								key={i}
+								id={_id}
+								sets={sets}
+								type={type}
+								workout={workout}
+								equipment={equipment}
+							/>
+						))
+					) : (
+						<>
+							<h1 className="noWorkouts">Looks like you're new here!</h1>
+							<h1 className="noWorkouts">
+								Search for a workout above to get started!
+							</h1>
+						</>
+					)}
 				</div>
 			</div>
 		</div>
