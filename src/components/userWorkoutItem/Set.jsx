@@ -6,10 +6,10 @@ import { db } from '../../firebase.config';
 import { updateDoc, doc, getDoc } from 'firebase/firestore';
 import {toast} from 'react-toastify'
 
-function Set({ setNum, reps, weight, workoutId }) {
+function Set({ setNum, reps, weight, workoutId, setNewSetAdded }) {
 	const [editSets, setEditSets] = useState(false);
 
-	const {setUserWorkouts} = useContext(WorkoutContext);
+	const {dispatch} = useContext(WorkoutContext);
 
 	// keeps the previous data
 	const [initialReps, setInitialReps] = useState(reps);
@@ -52,16 +52,18 @@ function Set({ setNum, reps, weight, workoutId }) {
 					workouts: [...updatedWorkouts],
 				});
 
-				setUserWorkouts([
+				dispatch({type: 'UPDATE_WORKOUTS', payload: [
 					...updatedWorkouts
-				])
+				]})
 
 				setInitialReps(stateReps);
 				setInitialWeight(stateWeight);
 
 				toast.success('Set Saved!')
+				setNewSetAdded(true)
 			} catch (error) {
 				toast.error('Error saving set')
+				console.log(error);
 			}
 		}
 

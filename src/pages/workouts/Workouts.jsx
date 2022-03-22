@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppContext from '../../context/appContext/AppContext';
-import { db } from '../../firebase.config';
-import { doc, getDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { FaSearch, FaTimes } from 'react-icons/fa';
 
@@ -10,10 +8,11 @@ import WorkoutContext from '../../context/workoutContext/WorkoutContext';
 import UserWorkoutItem from '../../components/userWorkoutItem/UserWorkoutItem';
 import { workoutList } from '../../WorkoutList';
 import SearchResult from '../../components/SearchResult';
+import UserWorkoutList from '../../components/userWorkoutItem/UserWorkoutList';
 
 function Workouts() {
 	const { setActiveLink } = useContext(AppContext);
-	const { userWorkouts, setUserWorkouts } = useContext(WorkoutContext);
+	const { userWorkouts } = useContext(WorkoutContext);
 
 	const [workoutSearch, setWorkoutSearch] = useState('');
 	const [searchResults, setSearchResults] = useState([]);
@@ -23,7 +22,6 @@ function Workouts() {
 
 	const auth = getAuth();
 	useEffect(() => {
-
 		// If user is not signed in, redirect to sign in
 		if (auth.currentUser === null || auth.currentUser === undefined) {
 			navigate('/');
@@ -33,7 +31,6 @@ function Workouts() {
 		// Sets bottom nav active link to home page
 		setActiveLink(window.location.pathname);
 
-		
 		// eslint-disable-next-line
 	}, []);
 
@@ -129,7 +126,8 @@ function Workouts() {
 				</div>
 				<div className="workoutsContainer">
 					{/* <h3 className="workoutDate">Monday, March 21st, 2022</h3> */}
-					{userWorkouts.length > 0 ? (
+					{
+						/* {userWorkouts.length > 0 ? (
 						userWorkouts.map(({ sets, type, workout, equipment, _id }, i) => (
 							<UserWorkoutItem
 								key={i}
@@ -147,7 +145,11 @@ function Workouts() {
 								Search for a workout above to get started!
 							</h1>
 						</>
-					)}
+					)} */
+						userWorkouts.map(({ date, workouts }, i) => (
+							<UserWorkoutList date={date} userWorkouts={workouts} key={i} />
+						))
+					}
 				</div>
 			</div>
 		</div>
