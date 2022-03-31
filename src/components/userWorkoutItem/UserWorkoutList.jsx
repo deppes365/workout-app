@@ -2,71 +2,101 @@ import React, { useEffect, useState, useContext } from 'react';
 import WorkoutContext from '../../context/workoutContext/WorkoutContext';
 import UserWorkoutItem from './UserWorkoutItem';
 
-function UserWorkoutList({ date, userWorkouts }) {
-	const [workoutDate, setWorkoutDate] = useState('')
-    const {dateFormat} = useContext(WorkoutContext)
+function UserWorkoutList({ date, userExercises }) {
+	const [workoutDate, setWorkoutDate] = useState('');
+	const { formatDate, dateFormat, userWorkouts } = useContext(WorkoutContext);
+	const [weeksOld, setWeeksOld] = useState('');
+	const [lastWorkoutOfWeek, setLastWorkoutOfWeek] = useState(false)
+
+	const checkForWeeksOld = () => {
+		const dateOfWorkout = Number(date.split(' ')[0]);
+		const todaysDate = Number(dateFormat().split(' ')[0]);
+		const daysOld = todaysDate - dateOfWorkout;
+		
+		
+		const weeksAgoNum = String(daysOld / 7)[0];
+		let weeksAgo;
+
+		const thisMonth = String(todaysDate).slice(4, 6)
+		const workoutMonth = String(dateOfWorkout).slice(4, 6)
 
 
-    const formatDate = () => {
-        const today = dateFormat()
+		if(daysOld >= 30 ) {
+			const monthsOld = +thisMonth - +workoutMonth
 
-        const daysOfTheWeek = {
-            sun: 'Sunday',
-            mon: 'Monday',
-            tue: 'Tuesday',
-            wed: 'Wednesday',
-            thu: 'Thursday',
-            fri: 'Friday',
-            sat: 'Saturday'
-        }
+			// Checks if this is a new year
+			if(monthsOld <= 0) {
+				const thisYear = String(todaysDate).slice(0, 4)
+				const workoutYear = String(dateOfWorkout).slice(0, 4)
+				const yearsOld = +thisYear - +workoutYear
+				setWeeksOld(`${yearsOld} year${yearsOld > 1 ? 's' : ''} ago`)
+				return
+			}
+			setWeeksOld(`${monthsOld} month${monthsOld > 1 ? 's' : ''} ago`)
+			return
+		} 
+		
+		if(weeksAgoNum === '1') {
+			weeksAgo = 'Last week'
+		} else if(weeksAgoNum === '0') {
+			weeksAgo = ''
+		} else {
+			weeksAgo = `${weeksAgoNum} weeks ago`
+		}
+		setWeeksOld(weeksAgo)
+	};
 
-        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+	useEffect(() => {
+		setWorkoutDate(formatDate(date));
+		// checkForWeeksOld();
+		checkWorkoutsThisWeek(date, userWorkouts);
+	}, [userWorkouts]);
 
-        const dateSuffixes = ['st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'st']
+	const checkWorkoutsThisWeek = (date, array) => {
+		// + sign changes it to a number instead of a string
+		const daysArray = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+		const [dateOfWorkout, dayOfweek] = date.split(' ');
+		const [todaysDate, todayDayOfWeek] = dateFormat().split(' ')
+		const daysOld = +todaysDate - +dateOfWorkout;
+		const weekRangeStart = +dateOfWorkout - +daysArray.indexOf(dayOfweek)
+		const weekRangeEnd = +dateOfWorkout - +daysArray.indexOf(dayOfweek) + 6
+		
 
-        const year = date.slice(0, 4)
-        let month = date.slice(4, 6)
-        const dateFromDate = date.slice(6, 8)
-        let day = date.split(' ')[1].toLowerCase()
-        let dayOfTheWeek = daysOfTheWeek[day]
+		const lastWorkoutOfThisWeek = array.filter(workout => {
+			const dateOfWorkout = +workout.date.split(' ')[0]
+			if(dateOfWorkout >= weekRangeStart && dateOfWorkout <= weekRangeEnd) {
+				return workout
+			}
+		})[0].date
+		
 
-        if(month[0] === '0') {
-            month = month.split('')[1]
-        }
+		if(date === lastWorkoutOfThisWeek) {
+			// State Update
+			setLastWorkoutOfWeek(true)
 
-        if(dateFromDate[0] === '0') {
-            dateFromDate = dateFromDate.split('')[1]
-        }
-
-        console.log(dateFromDate);
-        if(date === today) {
-            dayOfTheWeek = 'Today'
-        } else if (+today.split(' ')[0] - +date.split(' ')[0] === 1) {
-            dayOfTheWeek = 'Yesterday'
-        }
-
-        return `${dayOfTheWeek}, ${months[month - 1]} ${dateFromDate}${dateSuffixes[dateFromDate - 1]}, ${year}`
-    }
-
-    useEffect(() => {
-        setWorkoutDate(formatDate)
-    },[userWorkouts])
+			checkForWeeksOld()
+		}
+	};
 
 	return (
-		<div className="userWorkoutList">
-			<h3 className="workoutDate">{workoutDate}</h3>
-            <div className="workoutsListContainer">
-            {userWorkouts.map(({ sets, type, exercise, _id }, i) => (
-							<UserWorkoutItem
-								key={i}
-								id={_id}
-								sets={sets}
-								type={type}
-								workout={exercise}
-							/>
-						))}
-            </div>
-		</div>
+		<>
+			{lastWorkoutOfWeek && weeksOld !== '0 Week ago' && (<h3 className='weeksAgo'>{weeksOld}</h3>)}
+			<div className="userWorkoutList">
+				<h3 className="workoutDate">{workoutDate}</h3>
+				<div className="workoutsListContainer">
+					{userExercises.map(({ sets, type, exercise, _id }, i) => (
+						<UserWorkoutItem
+							key={_id}
+							id={_id}
+							sets={sets}
+							type={type}
+							workout={exercise}
+							date={date}
+						/>
+					))}
+				</div>
+			</div>
+		</>
 	);
 }
 

@@ -1,26 +1,39 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect,  useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppContext from '../../context/appContext/AppContext';
 import { getAuth } from 'firebase/auth';
 import { FaSearch, FaTimes } from 'react-icons/fa';
-
 import WorkoutContext from '../../context/workoutContext/WorkoutContext';
-import UserWorkoutItem from '../../components/userWorkoutItem/UserWorkoutItem';
 import { workoutList } from '../../WorkoutList';
 import SearchResult from '../../components/SearchResult';
 import UserWorkoutList from '../../components/userWorkoutItem/UserWorkoutList';
 
 function Workouts() {
 	const { setActiveLink } = useContext(AppContext);
-	const { userWorkouts } = useContext(WorkoutContext);
+	const { userWorkouts, dateFormat, formatDate, formatString } = useContext(WorkoutContext);
 
 	const [workoutSearch, setWorkoutSearch] = useState('');
 	const [searchResults, setSearchResults] = useState([]);
 	const [showSearchResults, setShowSearchResults] = useState(false);
+	const [noWorkoutsToday, setNoWorkoutsToday] = useState(false);
+
+	// Displays a message if the user doesn't have any workouts today
+	const checkForTodaysWorkouts = () => {
+		const today = dateFormat();
+		const todaysWorkouts = userWorkouts.filter(
+			workout => workout.date === today
+		);
+		if (!todaysWorkouts.length) {
+			setNoWorkoutsToday(true);
+		} else {
+			setNoWorkoutsToday(false);
+		}
+	};
 
 	const navigate = useNavigate();
 
 	const auth = getAuth();
+
 	useEffect(() => {
 		// If user is not signed in, redirect to sign in
 		if (auth.currentUser === null || auth.currentUser === undefined) {
@@ -31,22 +44,13 @@ function Workouts() {
 		// Sets bottom nav active link to home page
 		setActiveLink(window.location.pathname);
 
-		// eslint-disable-next-line
-	}, []);
+		checkForTodaysWorkouts();
 
-	// Capitalizes the first letter of each word of the workout
-	const formatString = str => {
-		const formattedString = str
-			.split(' ')
-			.map(word => {
-				if (word[0] === '(') {
-					return word.replace(word[1], word[1].toUpperCase());
-				}
-				return word.replace(word[0], word[0].toUpperCase());
-			})
-			.join(' ');
-		return formattedString;
-	};
+		// eslint-disable-next-line
+	}, [userWorkouts]);
+
+	
+	
 
 	const workoutSearchFunc = () => {
 		const filteredWorkouts = [];
@@ -125,31 +129,20 @@ function Workouts() {
 					</ul>
 				</div>
 				<div className="workoutsContainer">
-					{/* <h3 className="workoutDate">Monday, March 21st, 2022</h3> */}
-					{
-						/* {userWorkouts.length > 0 ? (
-						userWorkouts.map(({ sets, type, workout, equipment, _id }, i) => (
-							<UserWorkoutItem
-								key={i}
-								id={_id}
-								sets={sets}
-								type={type}
-								workout={workout}
-								equipment={equipment}
-							/>
-						))
-					) : (
+					{noWorkoutsToday ? (
 						<>
-							<h1 className="noWorkouts">Looks like you're new here!</h1>
-							<h1 className="noWorkouts">
-								Search for a workout above to get started!
-							</h1>
+							<h3 className="workoutDate">{formatDate(dateFormat())}</h3>
+							<p className="noWorkoutsMessage">
+								No workouts today. <br />
+								Search for a workout to started!
+							</p>
 						</>
-					)} */
-						userWorkouts.map(({ date, workouts }, i) => (
-							<UserWorkoutList date={date} userWorkouts={workouts} key={i} />
-						))
-					}
+					) : (
+						''
+					)}
+					{userWorkouts.map(({ date, workouts }) => (
+						<UserWorkoutList date={date} userExercises={workouts} key={date} />
+					))}
 				</div>
 			</div>
 		</div>

@@ -241,6 +241,38 @@ $breakpoints: (
 
 		.container {
 			width: 95%;
+			position: relative;
+		}
+
+		.activeLinkIndicator {
+			position: absolute;
+			content: '';
+			height: 3rem;
+			width: 3rem;
+			background-color: g.$accent-color;
+			border-radius: 50%;
+			z-index: -1;
+			transition: 0.2s ease;
+
+			&.workouts {
+				left: 35%;
+				transform: translateX(-40%);
+			}
+
+			&.home {
+				left: 65%;
+				transform: translate(-61%);
+			}
+
+			&.profile {
+				left: 97%;
+				transform: translateX(-100%);
+			}
+
+			&.weight{
+				left: 4%;
+				transform: translate(-10%);
+			}
 		}
 
 		@include lg() {
@@ -260,25 +292,27 @@ $breakpoints: (
 			border-radius: 50%;
 			overflow: hidden;
 			padding: 0.25rem;
+			color: #fff;
+			font-size: 2rem;
+			position: relative;
+			// &:active {
+			// 	color: #fff;
+			// }
 
-			&:active {
-				color: #fff;
-			}
+			// .bottom-nav-icon {
+			// 	color: #fff;
+			// 	font-size: 2rem;
+			// 	display: inline-block;
+			// 	padding: 0.2rem;
 
-			.bottom-nav-icon {
-				color: #fff;
-				font-size: 2rem;
-				display: inline-block;
-				padding: 0.2rem;
+			// 	@include lg() {
+			// 		font-size: 2.5rem;
+			// 	}
+			// }
 
-				@include lg() {
-					font-size: 2.5rem;
-				}
-			}
-
-			&.active {
-				background-color: g.$accent-color;
-			}
+			// &.active {
+			// 	background-color: g.$accent-color;
+			// }
 		}
 	}
 
@@ -434,20 +468,40 @@ $breakpoints: (
 			width: 100%;
 			padding-top: 1rem;
 
+			
+			
+
+			.weeksAgo {
+				width: 100%;
+				background-color: g.$dark-color;
+				text-align: center;
+				color: #fff;
+				border-radius: 20px;
+				margin-top: 1rem;
+			}
+
+			.workoutDate {
+				color: g.$dark-color;
+				background-color: g.$accent-color;
+				width: 100%;
+				text-align: center;
+				border-radius: 20px;
+				box-shadow: 2px 1px 5px rgba(0, 0, 0, 0.3);
+			}
+
+			p.noWorkoutsMessage {
+				font-size: 1.2rem;
+				margin-bottom: 1rem;
+				text-align: center;
+				color: g.$jet-black;
+			}
+
 			.userWorkoutList {
 				width: 100%;
 				display: flex;
 				flex-direction: column;
 				align-items: center;
 
-				.workoutDate {
-					color: g.$dark-color;
-					background-color: g.$accent-color;
-					width: 100%;
-					text-align: center;
-					border-radius: 20px;
-					box-shadow: 2px 1px 5px rgba(0, 0, 0, 0.3);
-				}
 
 				.workoutsListContainer {
 					width: 100%;
@@ -534,6 +588,7 @@ $breakpoints: (
 							height: 15rem;
 							border-top: 2px solid g.$accent-color;
 							overflow: scroll;
+							scroll-behavior: smooth;
 						}
 
 						.noSets {
@@ -672,6 +727,20 @@ $breakpoints: (
 					}
 				}
 			}
+		}
+	}
+
+	#profile {
+		.container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+		.userPhoto {
+			width: 225px;
+			height: 225px;
+			border-radius: 50%;
+			border: 5px solid g.$accent-color;
 		}
 	}
 

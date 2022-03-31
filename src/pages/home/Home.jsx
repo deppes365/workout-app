@@ -7,12 +7,17 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import './home.scss';
 import { FaRunning, FaWeight } from 'react-icons/fa';
 
-
 function Home() {
 	const [userData, setUserData] = useState({});
 	const { name } = userData;
 
-	const { setLoggedIn, setActiveLink } = useContext(AppContext);
+	const {
+		loggedIn,
+		setLoggedIn,
+		setActiveLink,
+		userWorkouts,
+		userRef
+	} = useContext(AppContext);
 	const { getUserInfoFromDB } = useContext(WorkoutContext);
 
 	const navigate = useNavigate();
@@ -21,13 +26,18 @@ function Home() {
 
 	const auth = getAuth();
 
+	
+
+	
 	// Once user comes to site, checks if logged in.
 	// If a user is not logged in, redirect to sign in
+	
 	useEffect(() => {
 		// Sets bottom nav active link to home page
 		setActiveLink(window.location.pathname);
 		if (isMounted) {
 			onAuthStateChanged(auth, user => {
+				if (loggedIn) return;
 				// Checks if there is a user signed in
 				if (user) {
 					const user = auth.currentUser;
@@ -35,10 +45,12 @@ function Home() {
 					if (user !== null) {
 						const fetchUserData = async () => {
 							await getUserInfoFromDB();
-						}
-						fetchUserData()
+						};
 
+						fetchUserData();
+						
 						setLoggedIn(true);
+
 						setUserData({
 							name: auth.currentUser.displayName.split(' ')[0],
 						});
@@ -48,6 +60,7 @@ function Home() {
 				} else {
 					setLoggedIn(false);
 					navigate('/');
+					return;
 				}
 			});
 		}
@@ -56,7 +69,9 @@ function Home() {
 			isMounted.current = false;
 		};
 		// eslint-disable-next-line
-	}, [isMounted]);
+	}, [isMounted, userRef]);
+
+	
 
 	return (
 		<div id="home" className="page">

@@ -1,60 +1,67 @@
 import { FaEdit, FaCheckSquare } from 'react-icons/fa';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import WorkoutContext from '../../context/workoutContext/WorkoutContext';
 import { getAuth } from 'firebase/auth';
 import { db } from '../../firebase.config';
-import { updateDoc, doc, getDoc } from 'firebase/firestore';
-import {toast} from 'react-toastify'
+import { updateDoc, doc, getDoc, setDoc } from 'firebase/firestore';
+import { toast } from 'react-toastify';
 
-function Set({ setNum, reps, weight, workoutId, setNewSetAdded }) {
+function Set({ setNum, reps, weight, workoutId, setNewSetAdded, date }) {
 	const [editSets, setEditSets] = useState(false);
 
-	const {dispatch} = useContext(WorkoutContext);
+	const { userWorkouts, dispatch, unitConverter, unit } = useContext(WorkoutContext);
 
 	// keeps the previous data
 	const [initialReps, setInitialReps] = useState(reps);
-	const [initialWeight, setInitialWeight] = useState(weight);
+	const [initialWeight, setInitialWeight] = useState(unitConverter(unit, weight, 'client', 'pounds',));
 
 	//new data set by user
 	const [stateReps, setStateReps] = useState(reps);
-	const [stateWeight, setStateWeight] = useState(weight);
+	const [stateWeight, setStateWeight] = useState(initialWeight);
 
 	const handleEdit = () => {
 		setEditSets(!editSets);
 	};
 
+
 	const onSave = async () => {
 		if (initialReps !== stateReps || initialWeight !== stateWeight) {
 			try {
-				const auth = getAuth();
-				const docRef = doc(db, 'users', auth.currentUser.uid);
-				const docSnap = await getDoc(docRef);
-				const userData = docSnap.data();
-				const userWorkoutsFromDB = userData.workouts;
-
-				const updatedWorkouts = userWorkoutsFromDB.map(workout => {
-					if (workout._id === workoutId) {
-						if (!workout.sets[setNum - 1]) {
-							workout.sets.push({
-								set: setNum,
-								reps: stateReps,
-								weight: stateWeight,
-							});
-						} else {
-							workout.sets[setNum - 1].reps = stateReps;
-							workout.sets[setNum - 1].weight = stateWeight;
-						}
+			
+				const newUserWorkouts = userWorkouts.map(workout => {
+					if (workout.date === date) {
+						workout.workouts.map(WO => {
+							if (WO._id === workoutId) {
+								if(!WO.sets.length || (WO.sets.find(set => set.set === setNum) === undefined)) {
+									WO.sets.push({
+										set: setNum, 
+										reps: stateReps,
+										weight: unitConverter(unit, stateWeight, 'database', `${unit === 'imperial' ? 'pounds' : 'kilograms'}`)
+									})
+								} else {
+									WO.sets.map(set => {
+										if(set.set === setNum) {
+											set.reps = stateReps
+											set.weight = unitConverter(unit, stateWeight, 'database', `${unit === 'imperial' ? 'pounds' : 'kilograms'}`)
+										}
+									})
+								}
+							}
+							return WO
+						});
 					}
 					return workout;
 				});
 
-				await updateDoc(docRef, {
-					workouts: [...updatedWorkouts],
-				});
+				const auth = getAuth()
+				const docRef = doc(db, 'users', auth.currentUser.uid)
 
-				dispatch({type: 'UPDATE_WORKOUTS', payload: [
-					...updatedWorkouts
-				]})
+
+				await updateDoc(docRef, {
+					workouts: [...newUserWorkouts]
+				})
+				dispatch({ type: 'UPDATE_WORKOUTS', payload: [...newUserWorkouts] });
+				
 
 				setInitialReps(stateReps);
 				setInitialWeight(stateWeight);
@@ -62,7 +69,7 @@ function Set({ setNum, reps, weight, workoutId, setNewSetAdded }) {
 				toast.success('Set Saved!')
 				setNewSetAdded(true)
 			} catch (error) {
-				toast.error('Error saving set')
+				toast.error('Error saving set');
 				console.log(error);
 			}
 		}
@@ -71,7 +78,7 @@ function Set({ setNum, reps, weight, workoutId, setNewSetAdded }) {
 	};
 
 	return (
-		<form className='setContainer'>
+		<form className="setContainer">
 			{editSets ? (
 				<FaCheckSquare className="editIcon check" onClick={onSave} />
 			) : (
@@ -101,7 +108,7 @@ function Set({ setNum, reps, weight, workoutId, setNewSetAdded }) {
 						disabled={!editSets}
 						onChange={e => setStateWeight(e.target.value)}
 					/>
-					<span>Lbs</span>
+					<span>{unit === 'imperial' ? 'Lbs' : 'Kg'}</span>
 				</div>
 			</div>
 		</form>

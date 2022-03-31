@@ -3,33 +3,31 @@ import WorkoutContext from '../../context/workoutContext/WorkoutContext';
 import Set from './Set';
 import { FaChevronUp } from 'react-icons/fa';
 
-function UserWorkoutItem({ sets, workout, equipment, id }) {
+function UserWorkoutItem({ sets, workout, equipment, id, date, type }) {
 	const [showSets, setShowSets] = useState(false);
 	const [userSets, setUserSets] = useState(sets);
-	const { unit } = useContext(WorkoutContext);
-	const [newSetAdded, setNewSetAdded] = useState(false)
+	const { unit, userWorkouts, unitConverter } = useContext(WorkoutContext);
+	const [newSetAdded, setNewSetAdded] = useState(false);
 	const [newMaxWeight, setNewMaxWeight] = useState(0);
-	
 
 	const getMaxWeight = () => {
 		const weights = sets.map(set => {
 			return +set.weight;
-		})
+		});
 
-		let  maxWeight = Math.max(...weights)
-		if(sets.length === 0) {
-			maxWeight = 0
+		let maxWeight = Math.max(...weights);
+		if (sets.length === 0) {
+			maxWeight = 0;
 		}
-		
+
 		setNewMaxWeight(maxWeight);
 	};
 
-
-	
 	useEffect(() => {
 		getMaxWeight();
-		setNewSetAdded(false)
-	}, [newSetAdded]);
+		setNewSetAdded(false);
+		
+	}, [newSetAdded, userWorkouts]);
 
 	const onClick = () => {
 		setShowSets(!showSets);
@@ -48,6 +46,10 @@ function UserWorkoutItem({ sets, workout, equipment, id }) {
 			setShowSets(!showSets);
 		}
 		setUserSets([...userSets, newSet]);
+
+		setTimeout(() => {
+			document.querySelector('.workoutDetails').scrollTop = document.querySelector('.workoutDetails').scrollHeight
+		}, 10)
 	};
 
 	return (
@@ -60,20 +62,21 @@ function UserWorkoutItem({ sets, workout, equipment, id }) {
 				{/* <h3 className="equipmentTitle">{`(${equipment})`}</h3> */}
 				<div className="infoContainer">
 					<p>Sets: {sets.length}</p>
-					<p>{`Max weight: ${newMaxWeight} ${
+					<p>{`Max weight: ${unitConverter(unit, newMaxWeight, 'client', 'pounds')} ${
 						unit === 'imperial' ? 'Lbs' : 'Kg'
 					}`}</p>
 				</div>
 				<div className={`workoutDetails ${showSets ? 'active' : ''}`}>
 					{userSets.length ? (
-						userSets.map(({ set, reps, weight }, i) => (
+						userSets.map(({ set, reps, weight }) => (
 							<Set
-								key={i}
+								key={set}
 								setNum={set}
 								reps={reps}
 								weight={weight}
 								workoutId={id}
 								setNewSetAdded={setNewSetAdded}
+								date={date}
 							/>
 						))
 					) : (
