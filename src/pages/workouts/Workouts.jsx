@@ -1,4 +1,4 @@
-import React, { useContext, useEffect,  useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppContext from '../../context/appContext/AppContext';
 import { getAuth } from 'firebase/auth';
@@ -10,7 +10,8 @@ import UserWorkoutList from '../../components/userWorkoutItem/UserWorkoutList';
 
 function Workouts() {
 	const { setActiveLink } = useContext(AppContext);
-	const { userWorkouts, dateFormat, formatDate, formatString } = useContext(WorkoutContext);
+	const { userWorkouts, dateFormat, formatDate, formatString } =
+		useContext(WorkoutContext);
 
 	const [workoutSearch, setWorkoutSearch] = useState('');
 	const [searchResults, setSearchResults] = useState([]);
@@ -48,9 +49,6 @@ function Workouts() {
 
 		// eslint-disable-next-line
 	}, [userWorkouts]);
-
-	
-	
 
 	const workoutSearchFunc = () => {
 		const filteredWorkouts = [];

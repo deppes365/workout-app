@@ -1,5 +1,5 @@
 import { createContext, useReducer } from 'react';
-import {WorkoutReducer} from './WorkoutReducer';
+import { WorkoutReducer } from './WorkoutReducer';
 
 import { getAuth } from 'firebase/auth';
 import { getDoc, doc, updateDoc } from 'firebase/firestore';
@@ -181,12 +181,9 @@ export const WorkoutProvider = ({ children }) => {
 			}
 		});
 
-		
-
 		const workoutSelected = workoutList.filter(workout => {
-			return workout.workoutName === workoutName.toLowerCase()
+			return workout.workoutName === workoutName.toLowerCase();
 		});
-
 
 		if (!workoutToAddTo.length) {
 			const workoutId = uuidv4();
@@ -266,47 +263,48 @@ export const WorkoutProvider = ({ children }) => {
 	};
 
 	const unitConverter = (unitType, num, destination, measurementType) => {
-		let number = num.toFixed(0)
+		let number = num;
 		let output;
 
-		if(unitType === 'imperial') return number
-		if(unitType === 'metric') {
-			if(destination === 'client') {
-				if(measurementType === 'inches') {
+		if (unitType === 'imperial') {
+			return number
+		}
+		if (unitType === 'metric') {
+			if (destination === 'client') {
+				if (measurementType === 'inches') {
 					number = num * 2.54;
-				} else if(measurementType === 'feet') {
-					number = num * 0.3048
-				} else if(measurementType === 'miles') {
-					number = num * 1.60934
-				} else if(measurementType === 'pounds') {
-					number = num * 0.453592
+				} else if (measurementType === 'feet') {
+					number = num * 0.3048;
+				} else if (measurementType === 'miles') {
+					number = num * 1.60934;
+				} else if (measurementType === 'pounds') {
+					number = num * 0.453592;
 				}
 			} else {
-				if(measurementType === 'centimeters') {
+				if (measurementType === 'centimeters') {
 					number = num / 2.54;
-				} else if(measurementType === 'meters') {
-					number = num / 0.3048
-				} else if(measurementType === 'kilometers') {
-					number = num / 1.60934
-				} else if(measurementType === 'kilograms') {
-					number = num / 0.453592
+				} else if (measurementType === 'meters') {
+					number = num / 0.3048;
+				} else if (measurementType === 'kilometers') {
+					number = num / 1.60934;
+				} else if (measurementType === 'kilograms') {
+					number = num / 0.453592;
 				}
 			}
 		} else {
-			output = num
+			output = num;
 		}
 
-		let calculatedNumber = String(number.toFixed(1)).split('.')
-		
+		let calculatedNumber = String(number.toFixed(1)).split('.');
 
-		if(calculatedNumber[1] === '0') {
-			output = calculatedNumber[0]
+		if (calculatedNumber[1] === '0') {
+			output = calculatedNumber[0];
 		} else {
-			output = calculatedNumber.join('.')
+			output = calculatedNumber.join('.');
 		}
-		
-		return +output
-	}
+
+		return +output;
+	};
 
 	////////// Return //////////
 	return (
@@ -327,7 +325,7 @@ export const WorkoutProvider = ({ children }) => {
 				dateFormat,
 				formatDate,
 				formatString,
-				unitConverter
+				unitConverter,
 			}}
 		>
 			{children}

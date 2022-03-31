@@ -38,14 +38,16 @@ function Set({ setNum, reps, weight, workoutId, setNewSetAdded, date }) {
 										reps: stateReps,
 										weight: unitConverter(unit, stateWeight, 'database', `${unit === 'imperial' ? 'pounds' : 'kilograms'}`)
 									})
+									console.log(unitConverter(unit, stateWeight, 'database', `${unit === 'imperial' ? 'pounds' : 'kilograms'}`));
 								} else {
-									// eslint-disable-next-line
+									
 									WO.sets.map(set => {
 										if(set.set === setNum) {
 											set.reps = stateReps
 											set.weight = unitConverter(unit, stateWeight, 'database', `${unit === 'imperial' ? 'pounds' : 'kilograms'}`)
 										}
 									})
+									console.log(unitConverter(unit, stateWeight, 'database', `${unit === 'imperial' ? 'pounds' : 'kilograms'}`));
 								}
 							}
 							return WO

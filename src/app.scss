@@ -364,6 +364,70 @@ $breakpoints: (
 	}
 
 	#workouts.page {
+		position: relative;
+		.prompt {
+			display: none;
+
+			&.active {
+				display: block;
+				position: fixed;
+				top: 3.5rem;
+				color: #fff;
+				width: 100%;
+				text-align: center;
+				padding: 1rem;
+				z-index: 15;
+				
+			}	
+
+			.promptContent {
+				position: relative;
+				z-index: 18;
+				background-color: g.$dark-color;
+				padding: 1rem;
+				border-radius: 20px;
+			}
+
+			.promptBG {
+				position: fixed;
+				top: 2.5rem;
+				left: 0;
+				width: 100%;
+				height: 100vh;
+				background-color: rgba(0, 0, 0, 0.8);
+				z-index: 10;
+			}
+
+			p {
+				font-size: 1.2rem;	
+			}
+
+			.btnDiv {
+				margin-top: 1rem;
+				width: 100%;
+				display: flex;
+				justify-content: center;
+				gap: 1rem;
+				
+				button {
+					font-size: 1.2rem;
+					border: 0;
+					border-radius: 5px;
+					padding: 0.25rem;
+					cursor: pointer;
+
+					&:first-of-type {
+						background-color: g.$accent-color;
+					}
+
+					&:last-of-type {
+						background-color: red;
+						color: #fff;
+						font-weight: 500;
+					}
+				}
+			}
+		}
 		.container {
 			display: flex;
 			flex-direction: column;
@@ -502,6 +566,7 @@ $breakpoints: (
 				flex-direction: column;
 				align-items: center;
 
+				
 
 				.workoutsListContainer {
 					width: 100%;
@@ -527,6 +592,8 @@ $breakpoints: (
 					}
 				}
 
+				
+
 				.userWorkoutItem {
 					width: 100%;
 					max-width: 375px;
@@ -539,23 +606,42 @@ $breakpoints: (
 					box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 					overflow: hidden;
 
+					.ellipsis {
+						position: absolute;
+						top: 0.75rem;
+						right: 0.75rem;
+						font-size: 1rem;
+						color: grey;
+					}
+
+					.dropDown {
+						position: absolute;
+						right: 0;
+						top: 2rem;
+						list-style: none;
+						background-color: lightgrey;
+						border: 1px solid gray;
+						z-index: 5;
+						padding: 0.25rem;
+						display: none;
+						border-radius: 20px;
+						transition: 0.2s ease;
+
+						&.active {
+							display: block;
+						}
+
+						li {
+							color: red;
+						};
+					}
+					
+
 					&.active {
 						height: 20rem;
 					}
 
-					.addSetBtn {
-						position: absolute;
-						top: 0.5rem;
-						right: 0.5rem;
-						border: 0;
-						background-color: g.$accent-color;
-						color: g.$jet-black;
-						font-size: 1rem;
-						font-weight: 400;
-						padding: 0.25rem;
-						border-radius: 20px;
-						box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
-					}
+					
 
 					.workoutTitle {
 						font-size: 1.2rem;
@@ -572,6 +658,23 @@ $breakpoints: (
 						justify-content: center;
 						gap: 1rem;
 						margin: 0.5rem 0;
+						height: 3.5rem;
+						position: relative;
+
+						.addSetBtn {
+							position: absolute;
+							bottom: 0;
+							left: 50%;
+							transform: translateX(-50%);
+							border: 0;
+							background-color: g.$accent-color;
+							color: g.$jet-black;
+							font-size: 1rem;
+							font-weight: 400;
+							padding: 0.25rem;
+							border-radius: 20px;
+							box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
+						}
 					}
 
 					p {
