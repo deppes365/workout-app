@@ -1,5 +1,5 @@
 import { createContext, useReducer } from 'react';
-import WorkoutReducer from './WorkoutReducer';
+import {WorkoutReducer} from './WorkoutReducer';
 
 import { getAuth } from 'firebase/auth';
 import { getDoc, doc, updateDoc } from 'firebase/firestore';

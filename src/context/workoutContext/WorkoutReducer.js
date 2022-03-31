@@ -1,5 +1,5 @@
-/// eslint-disable-next-line
-export default (state, action) => {
+
+export const WorkoutReducer = (state, action) => {
     switch(action.type) {
         case 'GET_USER_INFO':
             const workoutsInOrder = action.payload.workouts.sort((a, b) => {

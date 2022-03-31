@@ -6,82 +6,78 @@ function UserWorkoutList({ date, userExercises }) {
 	const [workoutDate, setWorkoutDate] = useState('');
 	const { formatDate, dateFormat, userWorkouts } = useContext(WorkoutContext);
 	const [weeksOld, setWeeksOld] = useState('');
-	const [lastWorkoutOfWeek, setLastWorkoutOfWeek] = useState(false)
+	const [lastWorkoutOfWeek, setLastWorkoutOfWeek] = useState(false);
 
 	const checkForWeeksOld = () => {
 		const dateOfWorkout = Number(date.split(' ')[0]);
 		const todaysDate = Number(dateFormat().split(' ')[0]);
 		const daysOld = todaysDate - dateOfWorkout;
-		
-		
+
 		const weeksAgoNum = String(daysOld / 7)[0];
 		let weeksAgo;
 
-		const thisMonth = String(todaysDate).slice(4, 6)
-		const workoutMonth = String(dateOfWorkout).slice(4, 6)
+		const thisMonth = String(todaysDate).slice(4, 6);
+		const workoutMonth = String(dateOfWorkout).slice(4, 6);
 
-
-		if(daysOld >= 30 ) {
-			const monthsOld = +thisMonth - +workoutMonth
+		if (daysOld >= 30) {
+			const monthsOld = +thisMonth - +workoutMonth;
 
 			// Checks if this is a new year
-			if(monthsOld <= 0) {
-				const thisYear = String(todaysDate).slice(0, 4)
-				const workoutYear = String(dateOfWorkout).slice(0, 4)
-				const yearsOld = +thisYear - +workoutYear
-				setWeeksOld(`${yearsOld} year${yearsOld > 1 ? 's' : ''} ago`)
-				return
+			if (monthsOld <= 0) {
+				const thisYear = String(todaysDate).slice(0, 4);
+				const workoutYear = String(dateOfWorkout).slice(0, 4);
+				const yearsOld = +thisYear - +workoutYear;
+				setWeeksOld(`${yearsOld} year${yearsOld > 1 ? 's' : ''} ago`);
+				return;
 			}
-			setWeeksOld(`${monthsOld} month${monthsOld > 1 ? 's' : ''} ago`)
-			return
-		} 
-		
-		if(weeksAgoNum === '1') {
-			weeksAgo = 'Last week'
-		} else if(weeksAgoNum === '0') {
-			weeksAgo = ''
-		} else {
-			weeksAgo = `${weeksAgoNum} weeks ago`
+			setWeeksOld(`${monthsOld} month${monthsOld > 1 ? 's' : ''} ago`);
+			return;
 		}
-		setWeeksOld(weeksAgo)
+
+		if (weeksAgoNum === '1') {
+			weeksAgo = 'Last week';
+		} else if (weeksAgoNum === '0') {
+			weeksAgo = '';
+		} else {
+			weeksAgo = `${weeksAgoNum} weeks ago`;
+		}
+		setWeeksOld(weeksAgo);
 	};
 
 	useEffect(() => {
 		setWorkoutDate(formatDate(date));
 		// checkForWeeksOld();
 		checkWorkoutsThisWeek(date, userWorkouts);
-		// eslint-disable-next-line
 	}, [userWorkouts]);
 
 	const checkWorkoutsThisWeek = (date, array) => {
 		// + sign changes it to a number instead of a string
 		const daysArray = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 		const [dateOfWorkout, dayOfweek] = date.split(' ');
-		const todaysDate = dateFormat().split(' ')[0]
-		
-		const weekRangeStart = +dateOfWorkout - +daysArray.indexOf(dayOfweek)
-		const weekRangeEnd = +dateOfWorkout - +daysArray.indexOf(dayOfweek) + 6
-		
-		// eslint-disable-next-line
+
+		const weekRangeStart = +dateOfWorkout - +daysArray.indexOf(dayOfweek);
+		const weekRangeEnd = +dateOfWorkout - +daysArray.indexOf(dayOfweek) + 6;
+
 		const lastWorkoutOfThisWeek = array.filter(workout => {
-			const dateOfWorkout = +workout.date.split(' ')[0]
-			if(dateOfWorkout >= weekRangeStart && dateOfWorkout <= weekRangeEnd) {
-				return workout
+			const dateOfWorkout = +workout.date.split(' ')[0];
+			if (dateOfWorkout >= weekRangeStart && dateOfWorkout <= weekRangeEnd) {
+				return workout;
 			}
-		})[0].date
-		
+		})[0].date;
 
-		if(date === lastWorkoutOfThisWeek) {
+		if (date === lastWorkoutOfThisWeek) {
 			// State Update
-			setLastWorkoutOfWeek(true)
+			setLastWorkoutOfWeek(true);
 
-			checkForWeeksOld()
+			checkForWeeksOld();
 		}
 	};
 
 	return (
 		<>
-			{lastWorkoutOfWeek && weeksOld !== '0 Week ago' && (<h3 className='weeksAgo'>{weeksOld}</h3>)}
+			{lastWorkoutOfWeek && weeksOld !== '0 Week ago' && (
+				<h3 className="weeksAgo">{weeksOld}</h3>
+			)}
 			<div className="userWorkoutList">
 				<h3 className="workoutDate">{workoutDate}</h3>
 				<div className="workoutsListContainer">

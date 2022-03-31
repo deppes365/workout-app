@@ -26,8 +26,8 @@ function UserWorkoutItem({ sets, workout, id, date }) {
 	useEffect(() => {
 		getMaxWeight();
 		setNewSetAdded(false);
-		
-	}, [newSetAdded, userWorkouts, getMaxWeight]);
+		// eslint-disable-next-line
+	}, [newSetAdded, userWorkouts]);
 
 	const onClick = () => {
 		setShowSets(!showSets);
