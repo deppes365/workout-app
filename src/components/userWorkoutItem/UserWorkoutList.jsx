@@ -50,18 +50,19 @@ function UserWorkoutList({ date, userExercises }) {
 		setWorkoutDate(formatDate(date));
 		// checkForWeeksOld();
 		checkWorkoutsThisWeek(date, userWorkouts);
+		// eslint-disable-next-line
 	}, [userWorkouts]);
 
 	const checkWorkoutsThisWeek = (date, array) => {
 		// + sign changes it to a number instead of a string
 		const daysArray = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 		const [dateOfWorkout, dayOfweek] = date.split(' ');
-		const [todaysDate, todayDayOfWeek] = dateFormat().split(' ')
-		const daysOld = +todaysDate - +dateOfWorkout;
+		const todaysDate = dateFormat().split(' ')[0]
+		
 		const weekRangeStart = +dateOfWorkout - +daysArray.indexOf(dayOfweek)
 		const weekRangeEnd = +dateOfWorkout - +daysArray.indexOf(dayOfweek) + 6
 		
-
+		// eslint-disable-next-line
 		const lastWorkoutOfThisWeek = array.filter(workout => {
 			const dateOfWorkout = +workout.date.split(' ')[0]
 			if(dateOfWorkout >= weekRangeStart && dateOfWorkout <= weekRangeEnd) {

@@ -6,6 +6,7 @@ function Profile() {
     
     useEffect(() => {
         setActiveLink(window.location.pathname);
+        // eslint-disable-next-line
     }, [])
 
   return (

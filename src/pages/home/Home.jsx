@@ -15,7 +15,6 @@ function Home() {
 		loggedIn,
 		setLoggedIn,
 		setActiveLink,
-		userWorkouts,
 		userRef
 	} = useContext(AppContext);
 	const { getUserInfoFromDB } = useContext(WorkoutContext);

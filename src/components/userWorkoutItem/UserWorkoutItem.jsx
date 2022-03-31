@@ -27,7 +27,7 @@ function UserWorkoutItem({ sets, workout, id, date }) {
 		getMaxWeight();
 		setNewSetAdded(false);
 		
-	}, [newSetAdded, userWorkouts]);
+	}, [newSetAdded, userWorkouts, getMaxWeight]);
 
 	const onClick = () => {
 		setShowSets(!showSets);
