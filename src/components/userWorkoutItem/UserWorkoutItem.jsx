@@ -3,7 +3,7 @@ import WorkoutContext from '../../context/workoutContext/WorkoutContext';
 import Set from './Set';
 import { FaChevronUp } from 'react-icons/fa';
 
-function UserWorkoutItem({ sets, workout, equipment, id, date, type }) {
+function UserWorkoutItem({ sets, workout, id, date }) {
 	const [showSets, setShowSets] = useState(false);
 	const [userSets, setUserSets] = useState(sets);
 	const { unit, userWorkouts, unitConverter } = useContext(WorkoutContext);

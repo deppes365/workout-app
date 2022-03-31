@@ -1,9 +1,9 @@
 import { FaEdit, FaCheckSquare } from 'react-icons/fa';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext} from 'react';
 import WorkoutContext from '../../context/workoutContext/WorkoutContext';
 import { getAuth } from 'firebase/auth';
 import { db } from '../../firebase.config';
-import { updateDoc, doc, getDoc, setDoc } from 'firebase/firestore';
+import { updateDoc, doc} from 'firebase/firestore';
 import { toast } from 'react-toastify';
 
 function Set({ setNum, reps, weight, workoutId, setNewSetAdded, date }) {
@@ -39,6 +39,7 @@ function Set({ setNum, reps, weight, workoutId, setNewSetAdded, date }) {
 										weight: unitConverter(unit, stateWeight, 'database', `${unit === 'imperial' ? 'pounds' : 'kilograms'}`)
 									})
 								} else {
+									// eslint-disable-next-line
 									WO.sets.map(set => {
 										if(set.set === setNum) {
 											set.reps = stateReps
