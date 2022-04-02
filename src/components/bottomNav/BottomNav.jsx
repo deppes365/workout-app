@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import AppContext from '../../context/appContext/AppContext'
 import {FaHome, FaUser, FaWeight, FaDumbbell} from 'react-icons/fa'
 import {Link} from 'react-router-dom'
@@ -6,7 +6,12 @@ import {Link} from 'react-router-dom'
 function BottomNav() {
     const {loggedIn} = useContext(AppContext)
     const {activeLink} = useContext(AppContext)
-    const [indicator, setIndicator] = useState('home')
+    const [indicator, setIndicator] = useState('')
+
+    useEffect(() => {
+      const ind = activeLink.split('/')[1]
+      setIndicator(ind);
+    }, [activeLink])
 
     
 

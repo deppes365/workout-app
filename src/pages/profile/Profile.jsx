@@ -1,4 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
+import {useNavigate} from 'react-router-dom'
 import AppContext from '../../context/appContext/AppContext';
 import WorkoutContext from '../../context/workoutContext/WorkoutContext';
 import { db, storage } from '../../firebase.config';
@@ -78,7 +79,12 @@ function Profile() {
 		setEdit(!edit);
 	};
 
+    const navigate = useNavigate()
 	useEffect(() => {
+        const auth = getAuth()
+        if(auth.currentUser === null || auth.currentUser === undefined) {
+            navigate('/')
+        }
 		setActiveLink(window.location.pathname);
 
 		formData.feet = +(height / 12).toFixed(0);
