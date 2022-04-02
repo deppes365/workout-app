@@ -15,7 +15,8 @@ export const WorkoutReducer = (state, action) => {
                 unit: action.payload.unit,
                 userRef: action.payload.userRef,
                 weightIns: action.payload.weightIns,
-                workouts: workoutsInOrder
+                workouts: workoutsInOrder,
+                profilePhotoUrl: action.payload.profilePhotoUrl
             }
         case 'CREATE_NEW_WORKOUT':
             return {
@@ -26,6 +27,20 @@ export const WorkoutReducer = (state, action) => {
             return {
                 ...state,
                 workouts: action.payload
+            }
+        case 'UPDATE_USER_PROFILE':
+            return {
+                ...state,
+                email: action.payload.email,
+                name: action.payload.name,
+                height: action.payload.height,
+                sex: action.payload.sex,
+                unit: action.payload.unit
+            }
+        case 'CHANGE_PROFILE_PIC':
+            return {
+                ...state,
+                profilePhotoUrl: action.payload
             }
         default:
             return state

@@ -23,6 +23,7 @@ export const WorkoutProvider = ({ children }) => {
 		useRef: '',
 		weighIns: [],
 		workouts: [],
+		profilePhotoUrl: '',
 	};
 
 	const [state, dispatch] = useReducer(WorkoutReducer, initialState);
@@ -267,7 +268,7 @@ export const WorkoutProvider = ({ children }) => {
 		let output;
 
 		if (unitType === 'imperial') {
-			return number
+			return number;
 		}
 		if (unitType === 'metric') {
 			if (destination === 'client') {
@@ -319,6 +320,7 @@ export const WorkoutProvider = ({ children }) => {
 				unit: state.unit,
 				userWorkouts: state.workouts,
 				weighIns: state.weightIns,
+				profilePhotoUrl: state.profilePhotoUrl,
 				getUserInfoFromDB,
 				createNewWorkout,
 				dispatch,

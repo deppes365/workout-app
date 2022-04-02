@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useEffect, useContext, useRef } from 'react';
 import AppContext from '../../context/appContext/AppContext';
 import WorkoutContext from '../../context/workoutContext/WorkoutContext';
 import { useNavigate } from 'react-router-dom';
@@ -8,8 +8,11 @@ import './home.scss';
 import { FaRunning, FaWeight } from 'react-icons/fa';
 
 function Home() {
-	const [userData, setUserData] = useState({});
-	const { name } = userData;
+	
+	const isMounted = useRef(true);
+	
+	const navigate = useNavigate();
+	const auth = getAuth();
 
 	const {
 		loggedIn,
@@ -17,16 +20,10 @@ function Home() {
 		setActiveLink,
 		userRef
 	} = useContext(AppContext);
-	const { getUserInfoFromDB } = useContext(WorkoutContext);
+	const { getUserInfoFromDB, name } = useContext(WorkoutContext);
 
-	const navigate = useNavigate();
-
-	const isMounted = useRef(true);
-
-	const auth = getAuth();
 
 	
-
 	
 	// Once user comes to site, checks if logged in.
 	// If a user is not logged in, redirect to sign in
@@ -50,9 +47,7 @@ function Home() {
 						
 						setLoggedIn(true);
 
-						setUserData({
-							name: auth.currentUser.displayName.split(' ')[0],
-						});
+						
 					} else {
 						console.log("User Doesn't exist");
 					}
@@ -72,10 +67,12 @@ function Home() {
 
 	
 
+	
+
 	return (
 		<div id="home" className="page">
 			<div className="container">
-				<h1>Welcome back {name}</h1>
+				<h1>{`Welcome back ${name.split(' ')[0]}!`}</h1>
 				<div className="overview-container">
 					<div className="grid-item-container">
 						<div className="grid-item">

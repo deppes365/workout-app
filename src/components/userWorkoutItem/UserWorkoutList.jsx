@@ -4,44 +4,59 @@ import UserWorkoutItem from './UserWorkoutItem';
 
 function UserWorkoutList({ date, userExercises }) {
 	const [workoutDate, setWorkoutDate] = useState('');
-	const { formatDate, dateFormat, userWorkouts } = useContext(WorkoutContext);
+	const { formatDate, userWorkouts } = useContext(WorkoutContext);
 	const [weeksOld, setWeeksOld] = useState('');
 	const [lastWorkoutOfWeek, setLastWorkoutOfWeek] = useState(false);
 
-	const checkForWeeksOld = () => {
-		const dateOfWorkout = Number(date.split(' ')[0]);
-		const todaysDate = Number(dateFormat().split(' ')[0]);
-		const daysOld = todaysDate - dateOfWorkout;
+	const calcDaysAgo = date => {
+		const daysInMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-		const weeksAgoNum = String(daysOld / 7)[0];
-		let weeksAgo;
+		const today = new Date();
+		const todaysDate = today.getDate();
+		const thisMonth = today.getMonth();
+		const thisYear = today.getFullYear();
 
-		const thisMonth = String(todaysDate).slice(4, 6);
-		const workoutMonth = String(dateOfWorkout).slice(4, 6);
+		const dayOfTheYear =
+			daysInMonths.slice(0, thisMonth).reduce((acc, cur) => cur + acc, 0) +
+			todaysDate;
 
-		if (daysOld >= 30) {
-			const monthsOld = +thisMonth - +workoutMonth;
+		const incomingDateYear = +date.slice(0, 4);
+		const incomingDateMonth = +date.slice(4, 6);
+		const incomingDateDate = +date.slice(6, 8);
 
-			// Checks if this is a new year
-			if (monthsOld <= 0) {
-				const thisYear = String(todaysDate).slice(0, 4);
-				const workoutYear = String(dateOfWorkout).slice(0, 4);
-				const yearsOld = +thisYear - +workoutYear;
-				setWeeksOld(`${yearsOld} year${yearsOld > 1 ? 's' : ''} ago`);
-				return;
-			}
-			setWeeksOld(`${monthsOld} month${monthsOld > 1 ? 's' : ''} ago`);
+		const incomingDateDayOfTheYear =
+			daysInMonths
+				.slice(0, incomingDateMonth - 1)
+				.reduce((acc, cur) => cur + acc, 0) + incomingDateDate;
+
+		let daysAgo = dayOfTheYear - incomingDateDayOfTheYear;
+
+		//if date compared to was last year
+		if (thisYear - incomingDateYear >= 1) {
+			const diffInYears = thisYear - incomingDateYear;
+			daysAgo =
+				365 * (diffInYears - 1) +
+				(365 - incomingDateDayOfTheYear) +
+				dayOfTheYear;
+		}
+
+		if (daysAgo >= 365) {
+			let yearsAgo = Math.floor(daysAgo / 365);
+			return setWeeksOld(`${yearsAgo} year${yearsAgo > 1 ? 's' : ''} ago`);
+		} else if (daysAgo >= 30) {
+			let monthsAgo = Math.floor(daysAgo / 30);
+			return setWeeksOld(`${monthsAgo} month${monthsAgo > 1 ? 's' : ''} ago`);
+		} else if (daysAgo === 1) {
 			return;
-		}
+		} else if (daysAgo < 30 && daysAgo >= 7) {
+			let weeks = Math.floor(daysAgo / 7);
 
-		if (weeksAgoNum === '1') {
-			weeksAgo = 'Last week';
-		} else if (weeksAgoNum === '0') {
-			weeksAgo = '';
-		} else {
-			weeksAgo = `${weeksAgoNum} weeks ago`;
+			if (weeks === 1) {
+				return setWeeksOld('Last week');
+			} else {
+				return setWeeksOld(`${weeks} weeks ago`);
+			}
 		}
-		setWeeksOld(weeksAgo);
 	};
 
 	useEffect(() => {
@@ -71,7 +86,8 @@ function UserWorkoutList({ date, userExercises }) {
 			// State Update
 			setLastWorkoutOfWeek(true);
 
-			checkForWeeksOld();
+			// checkForWeeksOld();
+			calcDaysAgo(date);
 		}
 	};
 

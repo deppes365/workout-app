@@ -120,6 +120,7 @@ function SignUp() {
 		const auth = getAuth();
 		const user = auth.currentUser;
 		formDataCopy.userRef = user.uid;
+		formDataCopy.profilePhotoUrl = 'https://firebasestorage.googleapis.com/v0/b/workout-app-d0cfd.appspot.com/o/users%2Fdefaultuserpic.jpeg?alt=media&token=d9ffe302-5ba4-4591-a89e-0b5f86c23f3a';
 
 		try {
 			await setDoc(doc(db, 'users', user.uid), formDataCopy);
