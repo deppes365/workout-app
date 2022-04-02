@@ -4,12 +4,7 @@ import WorkoutContext from '../../context/workoutContext/WorkoutContext';
 import { db, storage } from '../../firebase.config';
 import { getAuth } from 'firebase/auth';
 import { doc, updateDoc } from 'firebase/firestore';
-import {
-	getStorage,
-	ref,
-	uploadBytesResumable,
-	getDownloadURL,
-} from 'firebase/storage';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { toast } from 'react-toastify';
 
 import { v4 as uuidv4 } from 'uuid';
@@ -149,7 +144,10 @@ function Profile() {
 					<p onClick={() => setUpdatePhoto(!updatePhoto)}>
 						{updatePhoto ? 'Cancel' : 'Update Photo'}
 					</p>
-					<form className={`photoUploadForm ${updatePhoto && 'active'}`} onSubmit={onSubmitPhoto}>
+					<form
+						className={`photoUploadForm ${updatePhoto && 'active'}`}
+						onSubmit={onSubmitPhoto}
+					>
 						<input type="file" name="userProfilePic" id="userProfilePic" />
 						<button>Submit</button>
 						<p>Upload {progress} % complete</p>
