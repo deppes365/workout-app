@@ -145,7 +145,7 @@ function Profile() {
 						<img src={profilePhotoUrl} alt="" />
 					</div>
 					<p onClick={() => setUpdatePhoto(!updatePhoto)}>
-						{updatePhoto ? 'Cancel' : 'Update Photo'}
+						{updatePhoto ? 'Cancel' : 'Change Photo'}
 					</p>
 					<form
 						className={`photoUploadForm ${updatePhoto && 'active'}`}
