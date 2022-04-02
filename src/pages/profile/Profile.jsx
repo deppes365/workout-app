@@ -112,6 +112,7 @@ function Profile() {
 					(snapshot.bytesTransferred / snapshot.totalBytes) * 100
 				);
 				setProgress(prog);
+                
 			},
 			err => console.log(err),
 			() => {
@@ -125,6 +126,7 @@ function Profile() {
 						});
 
 						dispatch({ type: 'CHANGE_PROFILE_PIC', payload: url });
+                        setUpdatePhoto(false)
 					};
 
 					saveUrl();
@@ -132,6 +134,7 @@ function Profile() {
 				});
 			}
 		);
+        
 	};
 
 	return (
