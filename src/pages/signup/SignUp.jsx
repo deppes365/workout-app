@@ -65,7 +65,6 @@ function SignUp() {
 		}));
 	};
 
-	
 	const [userCreated, setUserCreated] = useState(false);
 
 	const handleNextPage = async e => {
@@ -86,9 +85,8 @@ function SignUp() {
 					displayName: name,
 				});
 
+				setCurrentForm(prevState => prevState + 1);
 				setUserCreated(true);
-
-				setCurrentForm(currentForm + 1);
 			} catch (error) {
 				if (error.code === 'auth/email-already-in-use') {
 					toast.error('Looks like this email is already in use...');
