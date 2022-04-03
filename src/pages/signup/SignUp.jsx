@@ -51,9 +51,11 @@ function SignUp() {
 
 	const { setMenuActive } = useContext(AppContext);
 
-	useEffect(() => setMenuActive(false), 
-	// eslint-disable-next-line
-	[]);
+	useEffect(
+		() => setMenuActive(false),
+
+		[currentForm]
+	);
 
 	const onChange = e => {
 		setFormData(prevState => ({
@@ -77,18 +79,13 @@ function SignUp() {
 		if (!userCreated) {
 			try {
 				const auth = getAuth();
-				await createUserWithEmailAndPassword(
-					auth,
-					email,
-					password
-				);
+				await createUserWithEmailAndPassword(auth, email, password);
 
-				
 				await updateProfile(auth.currentUser, {
 					displayName: name,
 				});
 
-        setUserCreated(true)
+				setUserCreated(true);
 
 				setCurrentForm(currentForm + 1);
 			} catch (error) {
@@ -99,8 +96,9 @@ function SignUp() {
 		}
 	};
 
-	const createUserProfile = async (e) => {
-    e.preventDefault()
+	const createUserProfile = async e => {
+		e.preventDefault();
+
 		const formDataCopy = formData;
 
 		if (unit === 'imperial') {
@@ -120,7 +118,8 @@ function SignUp() {
 		const auth = getAuth();
 		const user = auth.currentUser;
 		formDataCopy.userRef = user.uid;
-		formDataCopy.profilePhotoUrl = 'https://firebasestorage.googleapis.com/v0/b/workout-app-d0cfd.appspot.com/o/users%2Fdefaultuserpic.jpeg?alt=media&token=d9ffe302-5ba4-4591-a89e-0b5f86c23f3a';
+		formDataCopy.profilePhotoUrl =
+			'https://firebasestorage.googleapis.com/v0/b/workout-app-d0cfd.appspot.com/o/users%2Fdefaultuserpic.jpeg?alt=media&token=d9ffe302-5ba4-4591-a89e-0b5f86c23f3a';
 
 		try {
 			await setDoc(doc(db, 'users', user.uid), formDataCopy);
@@ -130,8 +129,6 @@ function SignUp() {
 			console.log(error);
 		}
 	};
-
-	
 
 	const forms = [
 		<InitialSignUp
@@ -144,7 +141,6 @@ function SignUp() {
 			passwordsMatch={passwordsMatch}
 		/>,
 		<Demographic
-			
 			onChange={onChange}
 			unit={unit}
 			sex={sex}
