@@ -17,31 +17,32 @@ function Menu({ toggleTheme, darkMode }) {
 	};
 
 	return (
-		<div className={`menu ${menuActive ? 'active' : ''}`}
-        onClick={() => setMenuActive(false)}>
-        <div className='themeDiv'>
-            <button className='themeBtn' onClick={(e) => {
-                e.preventDefault()
-                toggleTheme()
-            }}>{darkMode ? 'Light Mode' : "Dark Mode"}</button>
-        </div>
-			<ul
-			>
+		<div
+			className={`menu ${menuActive ? 'active' : ''}`}
+			onClick={() => setMenuActive(false)}
+		>
+			<div className="themeDiv">
+				<button
+					className="themeBtn"
+					onClick={e => {
+						e.preventDefault();
+						toggleTheme();
+					}}
+				>
+					{darkMode ? 'Light Mode' : 'Dark Mode'}
+				</button>
+			</div>
+			<ul>
 				{loggedIn ? (
 					<>
 						<li>
-							<Link className="nav-link" to="/">
+							<Link className="nav-link" to="/home">
 								Home
 							</Link>
 						</li>
 						<li>
-							<Link className="nav-link" to="/">
+							<Link className="nav-link" to="/profile">
 								Profile
-							</Link>
-						</li>
-						<li>
-							<Link className="nav-link" to="/">
-								Settings
 							</Link>
 						</li>
 						<li>

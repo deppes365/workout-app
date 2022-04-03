@@ -19,6 +19,7 @@ function SignUp() {
 	const navigate = useNavigate();
 
 	const [passwordsMatch, setPasswordsMatch] = useState(true);
+	const [currentForm, setCurrentForm] = useState(0);
 
 	const [formData, setFormData] = useState({
 		name: '',
@@ -64,7 +65,7 @@ function SignUp() {
 		}));
 	};
 
-	const [currentForm, setCurrentForm] = useState(0);
+	
 	const [userCreated, setUserCreated] = useState(false);
 
 	const handleNextPage = async e => {
