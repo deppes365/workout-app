@@ -55,7 +55,7 @@ function SignUp() {
 	useEffect(
 		() => setMenuActive(false),
 
-		[currentForm]
+		[currentForm, setMenuActive]
 	);
 
 	const onChange = e => {
