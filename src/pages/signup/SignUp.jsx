@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './signup.scss';
 import {
@@ -63,65 +63,62 @@ function SignUp() {
 		}));
 	};
 
-	const [userCreated, setUserCreated] = useState(false);
+	
 
 	const handleNextPage = async e => {
 		e.preventDefault();
-		
+
 		if (password !== password2) {
 			formData.password = '';
 			formData.password2 = '';
 			return setPasswordsMatch(false);
 		}
 
-		setForm(prevState => prevState + 1)
+		setForm(prevState => prevState + 1);
 	};
 
 	const createUserProfile = async e => {
 		e.preventDefault();
 
-		if (!userCreated) {
+		try {
+			const auth = getAuth();
+			await createUserWithEmailAndPassword(auth, email, password);
+
+			await updateProfile(auth.currentUser, {
+				displayName: name,
+			});
+
+			const formDataCopy = formData;
+
+			if (unit === 'imperial') {
+				formDataCopy.height = +feet * 12 + +inches;
+				formDataCopy.weight = weight;
+			} else {
+				formDataCopy.height = (+centimeters / 2.54).toFixed(1);
+				formDataCopy.weight = (weight * 2.2).toFixed(1);
+			}
+
+			delete formDataCopy.inches;
+			delete formDataCopy.feet;
+			delete formDataCopy.centimeters;
+			delete formDataCopy.password;
+			delete formDataCopy.password2;
+
+			const user = auth.currentUser;
+			formDataCopy.userRef = user.uid;
+			formDataCopy.profilePhotoUrl =
+				'https://firebasestorage.googleapis.com/v0/b/workout-app-d0cfd.appspot.com/o/users%2Fdefaultuserpic.jpeg?alt=media&token=d9ffe302-5ba4-4591-a89e-0b5f86c23f3a';
+
 			try {
-				const auth = getAuth();
-				await createUserWithEmailAndPassword(auth, email, password);
+				await setDoc(doc(db, 'users', user.uid), formDataCopy);
 
-				await updateProfile(auth.currentUser, {
-					displayName: name,
-				});
-
-				const formDataCopy = formData;
-
-				if (unit === 'imperial') {
-					formDataCopy.height = +feet * 12 + +inches;
-					formDataCopy.weight = weight;
-				} else {
-					formDataCopy.height = (+centimeters / 2.54).toFixed(1);
-					formDataCopy.weight = (weight * 2.2).toFixed(1);
-				}
-
-				delete formDataCopy.inches;
-				delete formDataCopy.feet;
-				delete formDataCopy.centimeters;
-				delete formDataCopy.password;
-				delete formDataCopy.password2;
-
-				
-				const user = auth.currentUser;
-				formDataCopy.userRef = user.uid;
-				formDataCopy.profilePhotoUrl =
-					'https://firebasestorage.googleapis.com/v0/b/workout-app-d0cfd.appspot.com/o/users%2Fdefaultuserpic.jpeg?alt=media&token=d9ffe302-5ba4-4591-a89e-0b5f86c23f3a';
-
-				try {
-					await setDoc(doc(db, 'users', user.uid), formDataCopy);
-
-					navigate('/home');
-				} catch (error) {
-					console.log(error);
-				}
+				navigate('/home');
 			} catch (error) {
-				if (error.code === 'auth/email-already-in-use') {
-					toast.error('Looks like this email is already in use...');
-				}
+				console.log(error);
+			}
+		} catch (error) {
+			if (error.code === 'auth/email-already-in-use') {
+				toast.error('Looks like this email is already in use...');
 			}
 		}
 	};
