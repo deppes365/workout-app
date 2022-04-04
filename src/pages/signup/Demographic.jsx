@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 function Demographic({
 	onChange,
@@ -10,6 +10,10 @@ function Demographic({
 	weight,
     createUserProfile
 }) {
+
+	useEffect(() => {
+		console.log('demographic rendered');
+	}, [])
 	return (
 		<form id="demographic" onSubmit={createUserProfile}>
 			<div className="radio-div">

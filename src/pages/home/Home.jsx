@@ -20,6 +20,7 @@ function Home() {
 		setActiveLink,
 		userRef
 	} = useContext(AppContext);
+
 	const { getUserInfoFromDB, name } = useContext(WorkoutContext);
 
 

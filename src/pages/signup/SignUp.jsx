@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './signup.scss';
 import {
@@ -18,8 +18,8 @@ import 'react-toastify/dist/ReactToastify.css';
 function SignUp() {
 	const navigate = useNavigate();
 
+	const [form, setForm] = useState(0);
 	const [passwordsMatch, setPasswordsMatch] = useState(true);
-	const [currentForm, setCurrentForm] = useState(0);
 
 	const [formData, setFormData] = useState({
 		name: '',
@@ -52,11 +52,9 @@ function SignUp() {
 
 	const { setMenuActive } = useContext(AppContext);
 
-	useEffect(
-		() => setMenuActive(false),
-
-		[currentForm, setMenuActive]
-	);
+	useEffect(() => {
+		setMenuActive(false);
+	}, [setMenuActive]);
 
 	const onChange = e => {
 		setFormData(prevState => ({
@@ -69,12 +67,18 @@ function SignUp() {
 
 	const handleNextPage = async e => {
 		e.preventDefault();
-
+		
 		if (password !== password2) {
 			formData.password = '';
 			formData.password2 = '';
 			return setPasswordsMatch(false);
 		}
+
+		setForm(prevState => prevState + 1)
+	};
+
+	const createUserProfile = async e => {
+		e.preventDefault();
 
 		if (!userCreated) {
 			try {
@@ -85,47 +89,40 @@ function SignUp() {
 					displayName: name,
 				});
 
-				setCurrentForm(prevState => prevState + 1);
-				setUserCreated(true);
+				const formDataCopy = formData;
+
+				if (unit === 'imperial') {
+					formDataCopy.height = +feet * 12 + +inches;
+					formDataCopy.weight = weight;
+				} else {
+					formDataCopy.height = (+centimeters / 2.54).toFixed(1);
+					formDataCopy.weight = (weight * 2.2).toFixed(1);
+				}
+
+				delete formDataCopy.inches;
+				delete formDataCopy.feet;
+				delete formDataCopy.centimeters;
+				delete formDataCopy.password;
+				delete formDataCopy.password2;
+
+				
+				const user = auth.currentUser;
+				formDataCopy.userRef = user.uid;
+				formDataCopy.profilePhotoUrl =
+					'https://firebasestorage.googleapis.com/v0/b/workout-app-d0cfd.appspot.com/o/users%2Fdefaultuserpic.jpeg?alt=media&token=d9ffe302-5ba4-4591-a89e-0b5f86c23f3a';
+
+				try {
+					await setDoc(doc(db, 'users', user.uid), formDataCopy);
+
+					navigate('/home');
+				} catch (error) {
+					console.log(error);
+				}
 			} catch (error) {
 				if (error.code === 'auth/email-already-in-use') {
 					toast.error('Looks like this email is already in use...');
 				}
 			}
-		}
-	};
-
-	const createUserProfile = async e => {
-		e.preventDefault();
-
-		const formDataCopy = formData;
-
-		if (unit === 'imperial') {
-			formDataCopy.height = +feet * 12 + +inches;
-			formDataCopy.weight = weight;
-		} else {
-			formDataCopy.height = (+centimeters / 2.54).toFixed(1);
-			formDataCopy.weight = (weight * 2.2).toFixed(1);
-		}
-
-		delete formDataCopy.inches;
-		delete formDataCopy.feet;
-		delete formDataCopy.centimeters;
-		delete formDataCopy.password;
-		delete formDataCopy.password2;
-
-		const auth = getAuth();
-		const user = auth.currentUser;
-		formDataCopy.userRef = user.uid;
-		formDataCopy.profilePhotoUrl =
-			'https://firebasestorage.googleapis.com/v0/b/workout-app-d0cfd.appspot.com/o/users%2Fdefaultuserpic.jpeg?alt=media&token=d9ffe302-5ba4-4591-a89e-0b5f86c23f3a';
-
-		try {
-			await setDoc(doc(db, 'users', user.uid), formDataCopy);
-
-			navigate('/home');
-		} catch (error) {
-			console.log(error);
 		}
 	};
 
@@ -151,6 +148,10 @@ function SignUp() {
 		/>,
 	];
 
+	const displayForm = () => {
+		return forms[form];
+	};
+
 	return (
 		<div id="sign-up">
 			<h1>
@@ -160,7 +161,7 @@ function SignUp() {
 				</span>
 			</h1>
 			<p>Let's create your account!</p>
-			{forms[currentForm]}
+			{displayForm()}
 			<p>
 				Already have an account? <Link to="/">Sign in</Link>
 			</p>

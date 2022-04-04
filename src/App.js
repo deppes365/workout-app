@@ -45,7 +45,7 @@ function App() {
 						<BottomNav />
 					</div>
 				</Router>
-				<ToastContainer autoClose={1000} />
+				<ToastContainer autoClose={2000} />
 			</AppProvider>
 		</WorkoutProvider>
 	);

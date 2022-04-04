@@ -188,56 +188,6 @@ function Profile() {
 							disabled={!edit}
 						/>
 					</div>
-					{formData.unit === 'imperial' ? (
-						<>
-							<label className="heightLabel" htmlFor="height">
-								Height:
-							</label>
-							<div className="heightInputs">
-								<div className="inputGroup">
-									<input
-										type="number"
-										name="feet"
-										id="feet"
-										value={formData.feet}
-										onChange={onChange}
-										disabled={!edit}
-									/>
-									<label htmlFor="feet">ft.</label>
-								</div>
-								<div className="inputGroup">
-									<input
-										type="number"
-										name="inches"
-										id="inches"
-										value={formData.inches}
-										onChange={onChange}
-										disabled={!edit}
-									/>
-									<label htmlFor="inches">in.</label>
-								</div>
-							</div>
-						</>
-					) : (
-						<>
-							<label className="heightLabel" htmlFor="height">
-								Height:
-							</label>
-							<div className="heightInputs">
-								<div className="inputGroup">
-									<input
-										type="number"
-										name="centimeters"
-										id="centimeters"
-										value={formData.centimeters}
-										onChange={onChange}
-										disabled={!edit}
-									/>
-									<label htmlFor="centimeters">cm.</label>
-								</div>
-							</div>
-						</>
-					)}
 					<div className="radioDiv">
 						<p>Sex:</p>
 						<div className="radios">
@@ -296,6 +246,56 @@ function Profile() {
 							</div>
 						</div>
 					</div>
+					{formData.unit === 'imperial' ? (
+						<>
+							<label className="heightLabel" htmlFor="height">
+								Height:
+							</label>
+							<div className="heightInputs">
+								<div className="inputGroup">
+									<input
+										type="number"
+										name="feet"
+										id="feet"
+										value={formData.feet}
+										onChange={onChange}
+										disabled={!edit}
+									/>
+									<label htmlFor="feet">ft.</label>
+								</div>
+								<div className="inputGroup">
+									<input
+										type="number"
+										name="inches"
+										id="inches"
+										value={formData.inches}
+										onChange={onChange}
+										disabled={!edit}
+									/>
+									<label htmlFor="inches">in.</label>
+								</div>
+							</div>
+						</>
+					) : (
+						<>
+							<label className="heightLabel" htmlFor="height">
+								Height:
+							</label>
+							<div className="heightInputs">
+								<div className="inputGroup">
+									<input
+										type="number"
+										name="centimeters"
+										id="centimeters"
+										value={formData.centimeters}
+										onChange={onChange}
+										disabled={!edit}
+									/>
+									<label htmlFor="centimeters">cm.</label>
+								</div>
+							</div>
+						</>
+					)}
 				</form>
 			</div>
 		</div>
